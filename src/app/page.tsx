@@ -2,21 +2,22 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { Menu } from "lucide-react";
 import { useState } from "react";
+
+import { MotionH1 } from "@/components/motion/MotionH1";
+import { MotionP } from '@/components/motion/MotionP';
+import { MotionDiv } from "@/components/motion/MotionDiv";
 
 function Logo() {
   return (
     <div className="flex items-center gap-3">
       <div className="w-10 h-10 bg-gradient-to-tr from-green-400 to-lime-500 rounded-full flex items-center justify-center text-black font-bold text-lg shadow-md">
-        F
       </div>
       <span className="text-xl md:text-2xl font-bold tracking-wide text-white">FitTrack</span>
     </div>
   );
 }
-
 
 function NavLink({ href, label }: { href: string; label: string }) {
   return (
@@ -31,53 +32,53 @@ function NavLink({ href, label }: { href: string; label: string }) {
 
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
-  const currentYear = new Date().getFullYear(); // 👈 тук дефинираме годината
+  const currentYear = new Date().getFullYear();
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-800 text-white font-sans">
-      {/* Навигация */}
-       <header className="sticky top-0 z-50 backdrop-blur-md bg-white/5 border-b border-white/10 shadow-md">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
-                <Logo />
-                <nav className="hidden md:flex gap-10">
-                  <NavLink href="/" label="Начало" />
-                  <NavLink href="/calculator" label="Калкулатор" />
-                  <NavLink href="/personal-plan" label="Персонални режими" />
-                  <NavLink href="/plans" label="Режими" />
-                  <NavLink href="/meals" label="Ястия" />
-                </nav>
-                <div className="md:hidden">
-                  <button onClick={() => setIsOpen(!isOpen)}>
-                    <Menu className="w-6 h-6 text-white" />
-                  </button>
-                </div>
-              </div>
-      
-              {isOpen && (
-                <div className="md:hidden bg-black/80 px-6 pb-4">
-                  <div className="flex flex-col gap-4">
-                    <NavLink href="/" label="Начало" />
-                    <NavLink href="/calculator" label="Калкулатор" />
-                    <NavLink href="/personal-plan" label="Персонални режими" />
-                    <NavLink href="/plans" label="Режими" />
-                    <NavLink href="/meals" label="Ястия" />
-                  </div>
-                </div>
-              )}
-            </header>
+      {/* Navigation */}
+      <header className="sticky top-0 z-50 backdrop-blur-md bg-white/5 border-b border-white/10 shadow-md">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+          <Logo />
+          <nav className="hidden md:flex gap-10">
+            <NavLink href="/" label="Начало" />
+            <NavLink href="/calculator" label="Калкулатор" />
+            <NavLink href="/personal-plan" label="Персонални режими" />
+            <NavLink href="/plans" label="Режими" />
+            <NavLink href="/meals" label="Ястия" />
+          </nav>
+          <div className="md:hidden">
+            <button onClick={() => setIsOpen(!isOpen)}>
+              <Menu className="w-6 h-6 text-white" />
+            </button>
+          </div>
+        </div>
 
-      {/* Hero секция */}
+        {isOpen && (
+          <div className="md:hidden bg-black/80 px-6 pb-4">
+            <div className="flex flex-col gap-4">
+              <NavLink href="/" label="Начало" />
+              <NavLink href="/calculator" label="Калкулатор" />
+              <NavLink href="/personal-plan" label="Персонални режими" />
+              <NavLink href="/plans" label="Режими" />
+              <NavLink href="/meals" label="Ястия" />
+            </div>
+          </div>
+        )}
+      </header>
+
+      {/* Hero Section */}
       <section className="max-w-6xl mx-auto text-center px-6 py-24">
-        <motion.h1
+        <MotionH1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="text-4xl md:text-6xl font-extrabold text-green-400 mb-6"
         >
           Добре дошъл във FitTrack
-        </motion.h1>
+        </MotionH1>
 
-        <motion.p
+        <MotionP
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
@@ -85,10 +86,10 @@ export default function Home() {
         >
           Твоят личен асистент за калории, хранителни режими и здравословен начин на живот.
           Изчисли своя дневен калориен прием, открий полезни режими и вдъхновяващи рецепти.
-        </motion.p>
+        </MotionP>
 
-        {/* Бутони */}
-        <motion.div
+        {/* Buttons */}
+        <MotionDiv
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.6 }}
@@ -106,10 +107,10 @@ export default function Home() {
           >
             Персонален режим
           </Link>
-        </motion.div>
+        </MotionDiv>
 
-        {/* Изображение */}
-        <motion.div
+        {/* Image */}
+        <MotionDiv
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.4, duration: 0.5 }}
@@ -121,13 +122,13 @@ export default function Home() {
             height={480}
             className="mx-auto rounded-3xl shadow-2xl border border-white/10"
           />
-        </motion.div>
+        </MotionDiv>
       </section>
 
-      {/* Footer секция */}
+      {/* Footer Section */}
       <footer className="bg-gray-900 text-gray-300 py-12 mt-12 border-t border-white/10">
         <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10">
-          {/* Контакти */}
+          {/* Contacts */}
           <div>
             <h3 className="text-lg font-semibold text-white mb-4">Контакти</h3>
             <p>Email: <a href="mailto:info@fittrack.bg" className="text-green-400 hover:underline">fittrackwebsite@gmail.com</a></p>
@@ -135,7 +136,7 @@ export default function Home() {
             <p>Адрес: София, България</p>
           </div>
 
-          {/* Бързи връзки */}
+          {/* Quick Links */}
           <div>
             <h3 className="text-lg font-semibold text-white mb-4">Бързи връзки</h3>
             <ul className="space-y-2">
@@ -146,7 +147,7 @@ export default function Home() {
             </ul>
           </div>
 
-          {/* Социални мрежи */}
+          {/* Social Media */}
           <div>
             <h3 className="text-lg font-semibold text-white mb-4">Последвай ни</h3>
             <ul className="space-y-2">
