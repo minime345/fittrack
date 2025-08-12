@@ -1,9 +1,0 @@
-{
-  "builds": [
-    {
-      "src": "fittrack-app/package.json",
-      "use": "@vercel/next"
-    }
-  ],
-  "routes": []
-}
