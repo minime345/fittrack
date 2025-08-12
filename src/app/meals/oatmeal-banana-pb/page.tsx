@@ -12,7 +12,7 @@ const meal = {
   carbs: 45,
   fat: 18,
   weight: 350,
-  image: "/images/oats.jpg",
+
   ingredients: [
     { name: "Фини овесени ядки", amount: "50 г", substitute: "елда, киноа" },
     { name: "Банан", amount: "1 бр (120 г)", substitute: "ябълка, круша" },
@@ -61,13 +61,7 @@ export default function OatmealBananaPBPage() {
           <h1 className="text-4xl font-bold text-green-400">{meal.name}</h1>
         </div>
 
-        {meal.image && (
-          <img
-            src={meal.image}
-            alt={meal.name}
-            className="rounded-xl mb-10 w-full max-h-96 object-cover"
-          />
-        )}
+ 
 
         {/* Макронутриенти */}
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 bg-gray-800 p-6 rounded-xl mb-10 text-center">

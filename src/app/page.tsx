@@ -17,6 +17,7 @@ function Logo() {
   );
 }
 
+
 function NavLink({ href, label }: { href: string; label: string }) {
   return (
     <Link
@@ -35,39 +36,35 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-800 text-white font-sans">
       {/* Навигация */}
-      <header className="sticky top-0 z-50 backdrop-blur-md bg-white/5 border-b border-white/10 shadow-md">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <Logo />
-
-          {/* Десктоп меню */}
-          <nav className="hidden md:flex gap-10">
-            <NavLink href="/" label="Начало" />
-            <NavLink href="/calculator" label="Калкулатор" />
-            <NavLink href="/personal-plan" label="Персонални режими" />
-            <NavLink href="/plans" label="Режими" />
-            <NavLink href="/meals" label="Ястия" />
-          </nav>
-
-          {/* Мобилно меню */}
-          <div className="md:hidden">
-            <button onClick={() => setIsOpen(!isOpen)}>
-              <Menu className="w-6 h-6 text-white" />
-            </button>
-          </div>
-        </div>
-
-        {isOpen && (
-          <div className="md:hidden bg-black/80 px-6 pb-4">
-            <div className="flex flex-col gap-4">
-              <NavLink href="/" label="Начало" />
-              <NavLink href="/calculator" label="Калкулатор" />
-              <NavLink href="/personal-plan" label="Персонални режими" />
-              <NavLink href="/plans" label="Режими" />
-              <NavLink href="/meals" label="Ястия" />
-            </div>
-          </div>
-        )}
-      </header>
+       <header className="sticky top-0 z-50 backdrop-blur-md bg-white/5 border-b border-white/10 shadow-md">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+                <Logo />
+                <nav className="hidden md:flex gap-10">
+                  <NavLink href="/" label="Начало" />
+                  <NavLink href="/calculator" label="Калкулатор" />
+                  <NavLink href="/personal-plan" label="Персонални режими" />
+                  <NavLink href="/plans" label="Режими" />
+                  <NavLink href="/meals" label="Ястия" />
+                </nav>
+                <div className="md:hidden">
+                  <button onClick={() => setIsOpen(!isOpen)}>
+                    <Menu className="w-6 h-6 text-white" />
+                  </button>
+                </div>
+              </div>
+      
+              {isOpen && (
+                <div className="md:hidden bg-black/80 px-6 pb-4">
+                  <div className="flex flex-col gap-4">
+                    <NavLink href="/" label="Начало" />
+                    <NavLink href="/calculator" label="Калкулатор" />
+                    <NavLink href="/personal-plan" label="Персонални режими" />
+                    <NavLink href="/plans" label="Режими" />
+                    <NavLink href="/meals" label="Ястия" />
+                  </div>
+                </div>
+              )}
+            </header>
 
       {/* Hero секция */}
       <section className="max-w-6xl mx-auto text-center px-6 py-24">

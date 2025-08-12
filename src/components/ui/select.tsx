@@ -2,9 +2,28 @@
 
 import * as React from "react";
 import { Check, ChevronDown } from "lucide-react";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList
+} from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
+
+type SelectItemProps = {
+  value: string;
+  children?: React.ReactNode;
+  onSelect?: () => void;
+};
+
+type SelectItemElement = React.ReactElement<SelectItemProps>;
 
 const Select = ({
   value,
@@ -18,8 +37,10 @@ const Select = ({
   const [open, setOpen] = React.useState(false);
 
   const currentItem = React.Children.toArray(children).find(
-    (child: any) => React.isValidElement(child) && child.props.value === value
-  ) as React.ReactElement | undefined;
+    (child) =>
+      React.isValidElement(child) &&
+      (child.props as SelectItemProps).value === value
+  ) as SelectItemElement | undefined;
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -34,13 +55,17 @@ const Select = ({
           <CommandInput placeholder="Търси..." />
           <CommandEmpty>Няма резултати</CommandEmpty>
           <CommandGroup>
-            <CommandList>{React.Children.map(children, (child) => {
-              if (!React.isValidElement(child)) return null;
-              return React.cloneElement(child, { onSelect: () => {
-                onValueChange(child.props.value);
-                setOpen(false);
-              } });
-            })}</CommandList>
+            <CommandList>
+              {React.Children.map(children, (child) => {
+                if (!React.isValidElement(child)) return null;
+                return React.cloneElement(child as SelectItemElement, {
+                  onSelect: () => {
+                    onValueChange((child.props as SelectItemProps).value);
+                    setOpen(false);
+                  },
+                });
+              })}
+            </CommandList>
           </CommandGroup>
         </Command>
       </PopoverContent>
@@ -48,46 +73,15 @@ const Select = ({
   );
 };
 
-const SelectTrigger = React.forwardRef<
-  HTMLButtonElement,
-  React.ComponentPropsWithoutRef<"button">
->(({ className, ...props }, ref) => (
-  <button
-    ref={ref}
-    className={cn("flex items-center justify-between rounded-md border px-3 py-2 text-sm", className)}
-    {...props}
-  />
-));
-SelectTrigger.displayName = "SelectTrigger";
-
-const SelectValue = ({ children }: { children?: React.ReactNode }) => (
-  <span>{children}</span>
-);
-
-const SelectContent = ({ children }: { children: React.ReactNode }) => <>{children}</>;
-
-const SelectItem = ({
-  value,
-  children,
-  onSelect,
-}: {
-  value: string;
-  children: React.ReactNode;
-  onSelect?: () => void;
-}) => (
+const SelectItem = ({ value, children, onSelect }: SelectItemProps) => (
   <CommandItem
     value={value}
     onSelect={onSelect}
     className="flex items-center justify-between"
   >
     {children}
-    <Check
-      className={cn("ml-2 h-4 w-4", {
-        "opacity-100": true,
-        "opacity-0": false,
-      })}
-    />
+    <Check className="ml-2 h-4 w-4 opacity-100" />
   </CommandItem>
 );
 
-export { Select, SelectTrigger, SelectValue, SelectContent, SelectItem };
+export { Select, SelectItem };

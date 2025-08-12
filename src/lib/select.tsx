@@ -3,9 +3,15 @@
 import * as React from "react";
 import { Check, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "./command";
-import { Popover, PopoverContent, PopoverTrigger } from "./popover";
-
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList
+} from "@/components/ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 const Select = ({ children, ...props }: React.ComponentProps<"div">) => {
   return <div {...props}>{children}</div>;
 };

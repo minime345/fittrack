@@ -12,7 +12,6 @@ const meal = {
   carbs: 10,
   fat: 38,
   weight: 400,
-  image: "/images/salmon-veggies.jpg", // смени пътя към снимката, ако е различен
   ingredients: [
     { name: "Филе от сьомга", amount: "200 г", substitute: "пъстърва, бяла риба" },
     { name: "Броколи", amount: "100 г", substitute: "зелен фасул, аспержи" },
@@ -62,14 +61,6 @@ export default function SalmonVeggiesPage() {
           <span className="text-6xl">{meal.icon}</span>
           <h1 className="text-4xl font-bold text-green-400">{meal.name}</h1>
         </div>
-
-        {meal.image && (
-          <img
-            src={meal.image}
-            alt={meal.name}
-            className="rounded-xl mb-10 w-full max-h-96 object-cover"
-          />
-        )}
 
         {/* Макроси */}
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 bg-gray-800 p-6 rounded-xl mb-10 text-center">

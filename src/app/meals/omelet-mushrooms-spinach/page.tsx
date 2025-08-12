@@ -12,7 +12,7 @@ const meal = {
   carbs: 5,
   fat: 24,
   weight: 300,
-  image: "/meals/omelet-spinach.jpeg",
+  
   ingredients: [
     { name: "Яйца", amount: "3 бр (180 г)", substitute: "яйчни белтъци, веган яйце заместител" },
     { name: "Гъби", amount: "100 г", substitute: "тиквички, чушки" },
@@ -61,13 +61,7 @@ export default function MushroomSpinachOmelettePage() {
           <h1 className="text-4xl font-bold text-green-400">{meal.name}</h1>
         </div>
 
-        {meal.image && (
-          <img
-            src={meal.image}
-            alt={meal.name}
-            className="rounded-xl mb-10 w-full max-h-96 object-cover"
-          />
-        )}
+       
 
         {/* Макроси */}
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 bg-gray-800 p-6 rounded-xl mb-10 text-center">

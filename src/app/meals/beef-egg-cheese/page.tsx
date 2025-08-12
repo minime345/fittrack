@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image"; // <- добавено
 
 // Данни за ястието
 const meal = {
@@ -62,11 +63,15 @@ export default function BeefEggsCheesePage() {
         </div>
 
         {meal.image && (
-          <img
-            src={meal.image}
-            alt={meal.name}
-            className="rounded-xl mb-10 w-full max-h-96 object-cover"
-          />
+          <div className="rounded-xl mb-10 w-full max-h-96 relative h-96">
+            <Image
+              src={meal.image}
+              alt={meal.name}
+              fill
+              style={{ objectFit: "cover", borderRadius: "0.75rem" }}
+              priority
+            />
+          </div>
         )}
 
         {/* Макроси */}

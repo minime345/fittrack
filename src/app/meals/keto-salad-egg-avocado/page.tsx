@@ -12,7 +12,7 @@ const meal = {
   carbs: 6,
   fat: 45,
   weight: 350,
-  image: "/images/keto-salad.jpg",
+  
   ingredients: [
     { name: "Авокадо", amount: "1/2 бр (100 г)", substitute: "маслини, ядки" },
     { name: "Яйца (варени)", amount: "2 бр", substitute: "яйца по очи, тофу" },
@@ -64,13 +64,6 @@ export default function KetoSaladPage() {
           <h1 className="text-4xl font-bold text-green-400">{meal.name}</h1>
         </div>
 
-        {meal.image && (
-          <img
-            src={meal.image}
-            alt={meal.name}
-            className="rounded-xl mb-10 w-full max-h-96 object-cover"
-          />
-        )}
 
         {/* Макроси */}
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 bg-gray-800 p-6 rounded-xl mb-10 text-center">

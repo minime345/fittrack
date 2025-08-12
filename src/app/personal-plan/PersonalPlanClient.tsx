@@ -7,7 +7,7 @@ import Link from "next/link";
 import jsPDF from "jspdf";
 import { motion } from "framer-motion";
 import { Menu } from "lucide-react";
-import { AnimatePresence} from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 
 import "@/fonts/Roboto-Regular.js";
 
@@ -28,6 +28,7 @@ export default function PersonalPlanPage() {
   const searchParams = useSearchParams();
   const baseCalories = Number(searchParams.get("calories")) || 2000;
   const currentYear = new Date().getFullYear();
+const [showShoppingList, setShowShoppingList] = useState(false);
 
   const [goal, setGoal] = useState<Goal>("maintain");
   const [diet, setDiet] = useState<Diet>("all");
@@ -36,6 +37,39 @@ export default function PersonalPlanPage() {
 
   // Новите стейтове за модалния прозорец
   const [showModal, setShowModal] = useState(false);
+  type Ingredient = {
+  name: string;
+  amount: number;
+  unit: string;
+};
+
+function generateShoppingList() {
+  const ingredientMap = new Map<string, Ingredient>();
+
+  weeklyPlan.forEach((day) => {
+    const allMeals = [
+      ...day.meals.breakfast,
+      ...day.meals.lunch,
+      ...day.meals.dinner,
+      ...day.meals.snack,
+    ];
+
+  allMeals.forEach((meal) => {
+  meal.ingredients?.forEach(({ name, amount, unit }) => {
+    const key = `${name}_${unit}`;
+    if (ingredientMap.has(key)) {
+      ingredientMap.get(key)!.amount += amount;
+    } else {
+      ingredientMap.set(key, { name, amount, unit });
+    }
+  });
+});
+  });
+
+  return Array.from(ingredientMap.values()).sort((a, b) =>
+    a.name.localeCompare(b.name)
+  );
+}
   const [selectedMeal, setSelectedMeal] = useState<typeof meals[0] | null>(null);
 
   const [weeklyPlan, setWeeklyPlan] = useState<
@@ -102,6 +136,7 @@ export default function PersonalPlanPage() {
       default:
         return mealsList;
     }
+  
     
   };
 useEffect(() => {
@@ -151,7 +186,7 @@ const generateDayPlan = (
   const filterByMealType = (type: string) => pool.filter((m) => m.mealType.includes(type));
 
   const breakfastCount = target >= 3300 ? 2 : 1;
-  const lunchCount = target < 1500 ? 1 : target < 1800 ? 1 : 2;
+  const lunchCount = target < 1500 ? 1 : target < 2300 ? 1 : 2;
   const dinnerCount = target >= 2800 ? 2 : 1;
   const snackCount = target < 1500 ? 0 : target < 1800 ? 1 : 2;
 
@@ -209,119 +244,146 @@ const generateDayPlan = (
 };
 
 
-  const downloadPDF = () => {
-    const doc = new jsPDF();
-    let y = 10;
+ const downloadPDF = () => {
+  const doc = new jsPDF();
+  let y = 10;
 
-    doc.setFont("Roboto", "normal");
-    doc.setFontSize(16);
-    doc.text("Персонален хранителен режим", 10, y);
-    y += 10;
+  doc.setFont("Roboto", "normal");
+  doc.setFontSize(16);
+  doc.text("Персонален хранителен режим", 10, y);
+  y += 10;
 
-    doc.setFontSize(12);
-    doc.text(`Цел: ${goalLabels[goal]} / Диета: ${dietLabels[diet]}`, 10, y);
-    y += 10;
+  doc.setFontSize(12);
+  doc.text(`Цел: ${goalLabels[goal]} / Диета: ${dietLabels[diet]}`, 10, y);
+  y += 10;
 
-    weeklyPlan.forEach((day, i) => {
-      doc.setFontSize(13);
-      doc.setTextColor(0, 128, 0);
-      doc.text(`Ден ${i + 1}`, 10, y);
-      y += 8;
+  weeklyPlan.forEach((day, i) => {
+    doc.setFontSize(13);
+    doc.setTextColor(0, 128, 0);
+    doc.text(`Ден ${i + 1}`, 10, y);
+    y += 8;
 
+    doc.setTextColor(0, 0, 0);
+
+    const sections = ["breakfast", "lunch", "dinner", "snack"] as const;
+
+    sections.forEach((section) => {
+      const mealsArr = day.meals[section];
+      if (mealsArr.length === 0) return;
+
+      doc.setFontSize(12);
+      doc.setTextColor(0, 102, 204);
+      doc.text(section.charAt(0).toUpperCase() + section.slice(1), 12, y);
+      y += 6;
+
+      doc.setFontSize(11);
       doc.setTextColor(0, 0, 0);
 
-      const sections = ["breakfast", "lunch", "dinner", "snack"] as const;
-
-      sections.forEach((section) => {
-        const mealsArr = day.meals[section];
-        if (mealsArr.length === 0) return;
-
-        doc.setFontSize(12);
-        doc.setTextColor(0, 102, 204);
-        doc.text(section.charAt(0).toUpperCase() + section.slice(1), 12, y);
-        y += 6;
-
-        doc.setFontSize(11);
-        doc.setTextColor(0, 0, 0);
-
-        mealsArr.forEach((meal) => {
-          if (y > 270) {
-            doc.addPage();
-            y = 10;
-            doc.setFont("Roboto", "normal");
-          }
-          const text = `• ${meal.name} – ${meal.kcal} kcal, P: ${meal.protein}g, C: ${meal.carbs}g, F: ${meal.fat}g`;
-          doc.textWithLink(text, 14, y, {
-            url: meal.link ? `https://yourdomain.com${meal.link}` : undefined,
-          });
-          y += 6;
+      mealsArr.forEach((meal) => {
+        if (y > 270) {
+          doc.addPage();
+          y = 10;
+          doc.setFont("Roboto", "normal");
+        }
+        const text = `• ${meal.name} – ${meal.kcal} kcal, P: ${meal.protein}g, C: ${meal.carbs}g, F: ${meal.fat}g`;
+        doc.textWithLink(text, 14, y, {
+          url: meal.link ? `https://yourdomain.com${meal.link}` : undefined,
         });
-
-        y += 4;
+        y += 6;
       });
 
-      const summary = `Общо: ${day.total.kcal} kcal / P: ${day.total.protein}g / C: ${day.total.carbs}g / F: ${day.total.fat}g`;
-      doc.setFontSize(11);
-      doc.setTextColor(100);
-      doc.text(summary, 12, y);
-      y += 12;
+      y += 4;
     });
 
-    doc.save("hranitelen-rezhim.pdf");
-  };
+    const summary = `Общо: ${day.total.kcal} kcal / P: ${day.total.protein}g / C: ${day.total.carbs}g / F: ${day.total.fat}g`;
+    doc.setFontSize(11);
+    doc.setTextColor(100);
+    doc.text(summary, 12, y);
+    y += 12;
+  });
 
-  function Logo() {
-    return (
-      <div className="flex items-center gap-2 sm:gap-3">
-        <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-tr from-green-400 to-lime-500 rounded-full flex items-center justify-center text-black font-bold text-base sm:text-lg shadow-md">
-          F
-        </div>
-        <span className="text-lg sm:text-xl font-bold tracking-wide text-white">FitTrack</span>
+  // Добавяме заглавие за списъка за пазаруване
+  y += 10;
+  if (y > 270) {
+    doc.addPage();
+    y = 10;
+  }
+
+  doc.setFontSize(14);
+  doc.setTextColor(0, 128, 0);
+  doc.text("Списък за пазаруване:", 10, y);
+  y += 10;
+
+  doc.setFontSize(12);
+  doc.setTextColor(0, 0, 0);
+
+  const shoppingList = generateShoppingList(); // Тук имаш ли тази функция?
+
+  shoppingList.forEach(({ name, amount, unit }) => {
+    if (y > 270) {
+      doc.addPage();
+      y = 10;
+    }
+    doc.text(`• ${name} - ${amount} ${unit}`, 12, y);
+    y += 6;
+  });
+
+  doc.save("hranitelen-rezhim.pdf");
+};
+
+function Logo() {
+  return (
+    <div className="flex items-center gap-3">
+      <div className="w-10 h-10 bg-gradient-to-tr from-green-400 to-lime-500 rounded-full flex items-center justify-center text-black font-bold text-lg shadow-md">
+        F
       </div>
-    );
-  }
+      <span className="text-xl md:text-2xl font-bold tracking-wide text-white">FitTrack</span>
+    </div>
+  );
+}
 
-  function NavLink({ href, label }: { href: string; label: string }) {
-    return (
-      <Link
-        href={href}
-        className="text-gray-300 hover:text-green-400 transition-colors duration-200 text-sm font-medium"
-      >
-        {label}
-      </Link>
-    );
-  }
+function NavLink({ href, label }: { href: string; label: string }) {
+  return (
+    <Link
+      href={href}
+      className="text-gray-300 hover:text-green-400 transition-colors duration-200 text-sm font-medium"
+    >
+      {label}
+    </Link>
+  );
+}
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-800 text-white">
-      <header className="sticky top-0 z-50 backdrop-blur-md bg-white/5 border-b border-white/10 shadow-md">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
-          <Logo />
-          <nav className="hidden md:flex gap-5">
-            <NavLink href="/" label="Начало" />
-            <NavLink href="/calculator" label="Калкулатор" />
-            <NavLink href="/personal-plan" label="Персонални режими" />
-            <NavLink href="/plans" label="Режими" />
-            <NavLink href="/meals" label="Ястия" />
-          </nav>
-          <div className="md:hidden">
-            <button onClick={() => setIsOpen(!isOpen)}>
-              <Menu className="w-6 h-6 text-white" />
-            </button>
-          </div>
-        </div>
-        {isOpen && (
-          <div className="md:hidden bg-black/90 px-6 pb-4">
-            <div className="flex flex-col gap-3">
-              <NavLink href="/" label="Начало" />
-              <NavLink href="/calculator" label="Калкулатор" />
-              <NavLink href="/personal-plan" label="Персонални режими" />
-              <NavLink href="/plans" label="Режими" />
-              <NavLink href="/meals" label="Ястия" />
-            </div>
-          </div>
-        )}
-      </header>
+      <main className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-800 text-white font-sans">
+       <header className="sticky top-0 z-50 backdrop-blur-md bg-white/5 border-b border-white/10 shadow-md">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+                <Logo />
+                <nav className="hidden md:flex gap-10">
+                  <NavLink href="/" label="Начало" />
+                  <NavLink href="/calculator" label="Калкулатор" />
+                  <NavLink href="/personal-plan" label="Персонални режими" />
+                  <NavLink href="/plans" label="Режими" />
+                  <NavLink href="/meals" label="Ястия" />
+                </nav>
+                <div className="md:hidden">
+                  <button onClick={() => setIsOpen(!isOpen)}>
+                    <Menu className="w-6 h-6 text-white" />
+                  </button>
+                </div>
+              </div>
+      
+              {isOpen && (
+                <div className="md:hidden bg-black/80 px-6 pb-4">
+                  <div className="flex flex-col gap-4">
+                    <NavLink href="/" label="Начало" />
+                    <NavLink href="/calculator" label="Калкулатор" />
+                    <NavLink href="/personal-plan" label="Персонални режими" />
+                    <NavLink href="/plans" label="Режими" />
+                    <NavLink href="/meals" label="Ястия" />
+                  </div>
+                </div>
+              )}
+            </header>
 
       <section className="max-w-5xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
         <motion.h1
@@ -536,15 +598,24 @@ const generateDayPlan = (
                       >
                         <span className="text-xl select-none">{meal.icon || "🍽️"}</span>
                         {meal.link ? (
-                          <Link
-                            href={meal.link}
-                            className="hover:text-green-400 no-underline"
-                          >
-                            {meal.name}
-                          </Link>
-                        ) : (
-                          <span>{meal.name}</span>
-                        )}
+  <Link
+    href={meal.link}
+    className="hover:text-green-400 no-underline"
+  >
+    {meal.name}
+  </Link>
+) : (
+  <button
+    onClick={() => {
+      setSelectedMeal(meal);
+      setShowModal(true);
+    }}
+    className="text-green-300 hover:text-green-400 text-left focus:outline-none"
+  >
+    {meal.name}
+  </button>
+)}
+
                       </div>
                     ))}
                   </div>
@@ -567,22 +638,45 @@ const generateDayPlan = (
       </section>
 
       {/* Бутон Изтегли PDF в долната част */}
-      <footer className="max-w-5xl mx-auto px-4 sm:px-6 py-6 flex justify-center">
+      <footer className="max-w-5xl mx-auto px-4 sm:px-6 py-6 flex flex-col gap-4 items-center">
   <button
     onClick={downloadPDF}
-    className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded shadow transition-colors max-w-xs w-full sm:w-auto"
+    className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded shadow transition-colors w-full sm:w-auto"
   >
-    Изтегли PDF
+    📄 Изтегли PDF
   </button>
-      </footer>
+
+  <button
+    onClick={() => setShowShoppingList(!showShoppingList)}
+    className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded shadow transition-colors w-full sm:w-auto"
+  >
+    🛒 Списък за пазаруване
+  </button>
+</footer>
+{showShoppingList && (
+  <section className="max-w-5xl mx-auto px-4 sm:px-6 py-6">
+    <div className="bg-gray-800 p-4 rounded-xl shadow-md border border-green-500 text-white">
+      <h2 className="text-green-400 text-lg font-semibold mb-4">
+        🛒 Списък за пазаруване
+      </h2>
+      <ul className="space-y-2 list-disc list-inside">
+        {generateShoppingList().map((item, idx) => (
+          <li key={idx} className="text-gray-300">
+            <span className="text-white font-medium">{item.name}</span> – {item.amount} {item.unit}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+)}
       {/* Footer секция */}
       <footer className="bg-gray-900 text-gray-300 py-12 mt-12 border-t border-white/10">
         <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10">
           {/* Контакти */}
           <div>
             <h3 className="text-lg font-semibold text-white mb-4">Контакти</h3>
-            <p>Email: <a href="mailto:info@fittrack.bg" className="text-green-400 hover:underline">info@fittrack.bg</a></p>
-            <p>Телефон: <a href="tel:+359888123456" className="text-green-400 hover:underline">+359 888 123 456</a></p>
+            <p>Email: <a href="mailto:info@fittrack.bg" className="text-green-400 hover:underline">fittrackwebsite@gmail.com</a></p>
+            <p>Телефон: <a href="tel:+359888123456" className="text-green-400 hover:underline">+359 887 183 887</a></p>
             <p>Адрес: София, България</p>
           </div>
 
@@ -601,9 +695,36 @@ const generateDayPlan = (
           <div>
             <h3 className="text-lg font-semibold text-white mb-4">Последвай ни</h3>
             <ul className="space-y-2">
-              <li><a href="#" className="hover:text-green-400">Facebook</a></li>
-              <li><a href="#" className="hover:text-green-400">Instagram</a></li>
-              <li><a href="#" className="hover:text-green-400">YouTube</a></li>
+              <li>
+                <a
+                  href="https://www.facebook.com/share/1GT8Ey98Re/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-green-400"
+                >
+                  Facebook
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.instagram.com/semetoitsmaname?igsh=MXg1ZHg1NXYxMHl2dQ=="
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-green-400"
+                >
+                  Instagram
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.youtube.com/yourchannel"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-green-400"
+                >
+                  YouTube
+                </a>
+              </li>
             </ul>
           </div>
         </div>
@@ -614,29 +735,37 @@ const generateDayPlan = (
       </footer>
       <AnimatePresence>
   {showModal && selectedMeal && (
+  <motion.div
+    className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center"
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+  >
     <motion.div
-      className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
+      className="bg-gray-900 text-white rounded-xl w-[90%] max-w-md shadow-lg border border-green-500 flex flex-col overflow-hidden"
+      initial={{ scale: 0.95, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      exit={{ scale: 0.95, opacity: 0 }}
+      transition={{ duration: 0.2 }}
     >
-      <motion.div
-        className="bg-gray-900 text-white rounded-xl p-6 w-[90%] max-w-md shadow-lg border border-green-500 relative"
-        initial={{ scale: 0.95, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.95, opacity: 0 }}
-        transition={{ duration: 0.2 }}
-      >
-        <button
-          onClick={() => setShowModal(false)}
-          className="absolute top-2 right-3 text-gray-400 hover:text-white text-xl"
-        >
-          ×
-        </button>
-        <h2 className="text-green-400 text-xl font-semibold mb-2 flex items-center gap-2">
+      {/* Header */}
+      <div className="flex items-center justify-between p-4 border-b border-gray-700 bg-gray-900 sticky top-0 z-10">
+        <h2 className="text-green-400 text-xl font-semibold flex items-center gap-2">
           {selectedMeal.icon} {selectedMeal.name}
         </h2>
-        <p className="text-sm mb-3 text-gray-300">{selectedMeal.recipe}</p>
+        <button
+          onClick={() => setShowModal(false)}
+          className="text-gray-400 hover:text-white text-xl"
+        >
+          ✕
+        </button>
+      </div>
+
+      {/* Scrollable Content */}
+      <div className="p-4 overflow-y-auto" style={{ maxHeight: '70vh' }}>
+        {selectedMeal.recipe && (
+          <p className="text-sm mb-3 text-gray-300">{selectedMeal.recipe}</p>
+        )}
         <div className="text-sm text-gray-400 space-y-1 font-mono">
           <div>Калории: <span className="text-white">{selectedMeal.kcal}</span> kcal</div>
           <div>Протеин: <span className="text-white">{selectedMeal.protein}</span> g</div>
@@ -644,9 +773,10 @@ const generateDayPlan = (
           <div>Мазнини: <span className="text-white">{selectedMeal.fat}</span> g</div>
           <div>Тегло: <span className="text-white">{selectedMeal.weight}</span> g</div>
         </div>
-      </motion.div>
+      </div>
     </motion.div>
-  )}
+  </motion.div>
+)}
 </AnimatePresence>
     </main>
   );

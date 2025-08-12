@@ -12,7 +12,7 @@ const meal = {
   carbs: 45,
   fat: 12,
   weight: 450,
-  image: "/images/lentil-stew.jpg",
+  
   ingredients: [
     { name: "Суха леща", amount: "100 г", substitute: "червена леща, зелена леща" },
     { name: "Морков", amount: "1 бр (80 г)", substitute: "сладки картофи, тиквичка" },
@@ -63,13 +63,7 @@ export default function LentilStewPage() {
           <h1 className="text-4xl font-bold text-green-400">{meal.name}</h1>
         </div>
 
-        {meal.image && (
-          <img
-            src={meal.image}
-            alt={meal.name}
-            className="rounded-xl mb-10 w-full max-h-96 object-cover"
-          />
-        )}
+       
 
         {/* Макроси */}
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 bg-gray-800 p-6 rounded-xl mb-10 text-center">

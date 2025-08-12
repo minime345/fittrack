@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
+ // добавено
 
-// Данни за ястието
 const meal = {
   name: "Протеинов шейк с банан и веган протеин",
   slug: "protein-shake-banana-vegan",
@@ -12,7 +12,7 @@ const meal = {
   carbs: 30,
   fat: 7,
   weight: 400,
-  image: "/images/banana-shake.jpg",
+  
   ingredients: [
     { name: "Банан", amount: "1 бр (120 г)", substitute: "манго, ананас" },
     { name: "Веган протеин (ванилия)", amount: "30 г", substitute: "суроватъчен, конопен" },
@@ -30,7 +30,6 @@ const meal = {
   ]
 };
 
-// Лого компонент
 function Logo() {
   return (
     <div className="flex items-center">
@@ -43,7 +42,6 @@ function Logo() {
 export default function BananaShakePage() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white">
-      {/* Навигация */}
       <nav className="flex items-center justify-between max-w-6xl mx-auto px-6 py-6 border-b border-gray-700">
         <Logo />
         <div className="space-x-8">
@@ -55,22 +53,13 @@ export default function BananaShakePage() {
         </div>
       </nav>
 
-      {/* Съдържание */}
       <section className="max-w-4xl mx-auto px-6 py-16">
         <div className="flex items-center gap-4 mb-8">
           <span className="text-6xl">{meal.icon}</span>
           <h1 className="text-4xl font-bold text-green-400">{meal.name}</h1>
         </div>
 
-        {meal.image && (
-          <img
-            src={meal.image}
-            alt={meal.name}
-            className="rounded-xl mb-10 w-full max-h-96 object-cover"
-          />
-        )}
 
-        {/* Макроси */}
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 bg-gray-800 p-6 rounded-xl mb-10 text-center">
           <div>
             <div className="text-3xl font-bold text-green-400">{meal.kcal}</div>
@@ -94,7 +83,6 @@ export default function BananaShakePage() {
           </div>
         </div>
 
-        {/* Съставки */}
         <div className="mb-10">
           <h2 className="text-2xl font-semibold text-white mb-4">Съставки</h2>
           <ul className="space-y-2">
@@ -110,7 +98,6 @@ export default function BananaShakePage() {
           </ul>
         </div>
 
-        {/* Стъпки */}
         <div>
           <h2 className="text-2xl font-semibold text-white mb-4">Начин на приготвяне</h2>
           <ol className="list-decimal list-inside space-y-3 text-lg text-gray-200 leading-relaxed">
