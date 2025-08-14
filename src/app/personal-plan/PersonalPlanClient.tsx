@@ -669,22 +669,20 @@ function NavLink({ href, label }: { href: string; label: string }) {
     📄 Изтегли PDF
   </button>
 
-  <button
-  onClick={() => setShowShoppingList(!showShoppingList)}
-  className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded shadow transition-colors w-full sm:w-auto"
->
-  🛒 Списък за пазаруване
-</button>
-
+ <button
+    onClick={() => setShowShoppingList(!showShoppingList)}
+    className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded shadow transition-colors w-full sm:w-auto"
+  >
+    🛒 Списък за пазаруване
+  </button>
 </footer>
-
 {showShoppingList && (
   <section className="max-w-5xl mx-auto px-4 sm:px-6 py-6">
     <div className="bg-gray-800 p-4 rounded-xl shadow-md border border-green-500 text-white">
       <h2 className="text-green-400 text-lg font-semibold mb-4">
         🛒 Списък за пазаруване
       </h2>
-      <ul className="grid grid-cols-2 gap-2 list-disc list-inside">
+      <ul className="space-y-2 list-disc list-inside">
         {generateShoppingList().map((item, idx) => (
           <li key={idx} className="text-gray-300">
             <span className="text-white font-medium">{item.name}</span> – {item.amount} {item.unit}
