@@ -243,37 +243,55 @@ const generateDayPlan = (
   return { meals: selectedMeals, total };
 };
 
-
- const downloadPDF = () => {
+const downloadPDF = () => {
   const doc = new jsPDF();
-  let y = 10;
+  const pageWidth = doc.internal.pageSize.getWidth();
+  let y = 15;
 
+  // Keep Roboto for Bulgarian text
   doc.setFont("Roboto", "normal");
-  doc.setFontSize(16);
-  doc.text("Персонален хранителен режим", 10, y);
-  y += 10;
 
+  // Title Section
+  doc.setFillColor(230, 247, 230); // light green background
+  doc.roundedRect(8, y - 8, pageWidth - 16, 20, 3, 3, "F");
+  doc.setFontSize(18);
+  doc.setTextColor(0, 128, 0);
+  doc.text("Персонален хранителен режим", pageWidth / 2, y + 4, { align: "center" });
+  y += 20;
+
+  // Goal & Diet
   doc.setFontSize(12);
-  doc.text(`Цел: ${goalLabels[goal]} / Диета: ${dietLabels[diet]}`, 10, y);
-  y += 10;
+  doc.setTextColor(50, 50, 50);
+  doc.text(`Цел: ${goalLabels[goal]} / Диета: ${dietLabels[diet]}`, 12, y);
+  y += 12;
 
+  // Weekly Plan
   weeklyPlan.forEach((day, i) => {
-    doc.setFontSize(13);
+    // Day Header Card
+    doc.setFillColor(240, 255, 240);
+    doc.roundedRect(8, y - 6, pageWidth - 16, 8, 2, 2, "F");
+    doc.setFontSize(14);
     doc.setTextColor(0, 128, 0);
-    doc.text(`Ден ${i + 1}`, 10, y);
+    doc.text(`Ден ${i + 1}`, 12, y);
     y += 8;
 
     doc.setTextColor(0, 0, 0);
 
-    const sections = ["breakfast", "lunch", "dinner", "snack"] as const;
+    const sections = [
+      { key: "breakfast", label: "Закуска" },
+      { key: "lunch", label: "Обяд" },
+      { key: "dinner", label: "Вечеря" },
+      { key: "snack", label: "Снак" },
+    ] as const;
 
     sections.forEach((section) => {
-      const mealsArr = day.meals[section];
+      const mealsArr = day.meals[section.key];
       if (mealsArr.length === 0) return;
 
+      // Section Name
       doc.setFontSize(12);
       doc.setTextColor(0, 102, 204);
-      doc.text(section.charAt(0).toUpperCase() + section.slice(1), 12, y);
+      doc.text(section.label, 14, y);
       y += 6;
 
       doc.setFontSize(11);
@@ -282,11 +300,11 @@ const generateDayPlan = (
       mealsArr.forEach((meal) => {
         if (y > 270) {
           doc.addPage();
-          y = 10;
+          y = 15;
           doc.setFont("Roboto", "normal");
         }
         const text = `• ${meal.name} – ${meal.kcal} kcal, P: ${meal.protein}g, C: ${meal.carbs}g, F: ${meal.fat}g`;
-        doc.textWithLink(text, 14, y, {
+        doc.textWithLink(text, 16, y, {
           url: meal.link ? `https://yourdomain.com${meal.link}` : undefined,
         });
         y += 6;
@@ -295,36 +313,37 @@ const generateDayPlan = (
       y += 4;
     });
 
+    // Day Summary
     const summary = `Общо: ${day.total.kcal} kcal / P: ${day.total.protein}g / C: ${day.total.carbs}g / F: ${day.total.fat}g`;
     doc.setFontSize(11);
-    doc.setTextColor(100);
-    doc.text(summary, 12, y);
+    doc.setTextColor(80, 80, 80);
+    doc.text(summary, 14, y);
     y += 12;
   });
 
-  // Добавяме заглавие за списъка за пазаруване
-  y += 10;
-  if (y > 270) {
+  // Shopping List Title
+  if (y > 260) {
     doc.addPage();
-    y = 10;
+    y = 15;
   }
-
+  doc.setFillColor(230, 247, 230);
+  doc.roundedRect(8, y - 6, pageWidth - 16, 10, 3, 3, "F");
   doc.setFontSize(14);
   doc.setTextColor(0, 128, 0);
-  doc.text("Списък за пазаруване:", 10, y);
-  y += 10;
+  doc.text("Списък за пазаруване:", 12, y);
+  y += 12;
 
+  // Shopping List Items
   doc.setFontSize(12);
   doc.setTextColor(0, 0, 0);
 
-  const shoppingList = generateShoppingList(); // Тук имаш ли тази функция?
-
+  const shoppingList = generateShoppingList();
   shoppingList.forEach(({ name, amount, unit }) => {
     if (y > 270) {
       doc.addPage();
-      y = 10;
+      y = 15;
     }
-    doc.text(`• ${name} - ${amount} ${unit}`, 12, y);
+    doc.text(`• ${name} - ${amount} ${unit}`, 14, y);
     y += 6;
   });
 
@@ -386,43 +405,45 @@ function NavLink({ href, label }: { href: string; label: string }) {
             </header>
 
       <section className="max-w-5xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
-        <motion.h1
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-xl sm:text-2xl md:text-3xl font-bold text-green-400 text-center mb-8"
-        >
-          Персонален хранителен режим
-        </motion.h1>
+  <motion.h1
+  initial={{ opacity: 0, y: -10 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.5 }}
+  className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-teal-300 text-center mb-6"
+>
+  Хранителен режим
+</motion.h1>
 
-        {baseCalories === 2000 && (
-          <div className="text-center mb-6">
-            <p className="mb-3 text-yellow-400 text-sm sm:text-base">
-              ⚠️ Използвани са стандартни стойности от <strong>2000 kcal</strong>.
-            </p>
-            <Link href="/calculator">
-              <button className="bg-green-500 text-black font-semibold px-4 py-2 rounded hover:bg-green-400 transition text-sm">
-                Изчисли своите калории
-              </button>
-            </Link>
-          </div>
-        )}
+{baseCalories === 2000 && (
+  <motion.div
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ delay: 0.2 }}
+    className="text-center mb-4"
+  >
+    <p className="text-yellow-400 text-sm">
+      ⚠️ Използвани са стандартни 2000 kcal
+    </p>
+    <Link href="/calculator">
+      <button className="mt-2 bg-green-500 text-black font-semibold px-4 py-1 rounded-lg hover:bg-green-400 transition text-sm">
+        Изчисли калориите
+      </button>
+    </Link>
+  </motion.div>
+)}
 
-        <div className="bg-gray-800 p-4 rounded-xl shadow-md text-white space-y-2 border border-green-500 mb-8 text-sm sm:text-base">
-          <p>
-            <span className="text-green-400 font-semibold">Калории за поддържане:</span> {baseCalories} kcal
-          </p>
-          <p>
-            <span className="text-green-400 font-semibold">За отслабване:</span> {Math.round(baseCalories * 0.85)} kcal
-          </p>
-        <p>
-            <span className="text-green-400 font-semibold">За качване:</span> {Math.round(baseCalories * 1.15)} kcal
-          </p>
-
-          <span className="text-green-400 font-semibold">Протеин:</span> {proteinMin} – {proteinMax} g
-
-
-        </div>
+<div className="bg-gray-800 px-4 py-3 rounded-lg shadow-md text-white border border-green-500 text-base sm:text-lg w-full sm:max-w-md mx-auto">
+  <div className="flex justify-between items-center">
+    <span className="text-green-400 font-semibold">
+      Калории за {goalLabels[goal]}:
+    </span>
+    <span>{getTargetCalories()} kcal</span>
+  </div>
+  <div className="flex justify-between items-center border-t border-gray-700 mt-2 pt-2">
+    <span className="text-green-400 font-semibold">Протеин:</span>
+    <span>{proteinMin} – {proteinMax} g</span>
+  </div>
+</div>
 
         <div className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center mb-10 text-sm">
           <div>
@@ -473,25 +494,25 @@ function NavLink({ href, label }: { href: string; label: string }) {
 </select>
 </div>
 
-<div className="bg-gradient-to-br from-gray-800 to-gray-900 border border-green-500/40 rounded-xl p-5 text-sm sm:text-base text-gray-200 shadow-inner mb-8">
-  <h2 className="text-green-400 text-lg font-semibold mb-2 flex items-center gap-2">
+<div className="bg-gradient-to-br from-gray-800 to-gray-900 border border-green-500/40 rounded-xl p-3 text-xs sm:text-sm text-gray-200 shadow-inner mb-6">
+  <h2 className="text-green-400 text-base font-semibold mb-1 flex items-center gap-2">
     🧠 Информация за режима
   </h2>
-  <ul className="space-y-1 list-disc list-inside text-gray-300">
+  <ul className="space-y-0.5 list-disc list-inside text-gray-300">
     <li>
-      Този хранителен режим е <span className="text-green-400 font-medium">автоматично генериран</span> според въведените калории, цел и тип диета.
+      Режимът е <span className="text-green-400 font-medium">автоматично генериран</span> спрямо калории, цел и диета.
     </li>
     <li>
-      Ястията са избрани така, че да балансират калориите и протеина за деня.
+      Ястията балансират калории и протеин за деня.
     </li>
     <li>
-      Може да <span className="text-green-400 font-medium">редувате ястията</span> по свое желание – закуските могат да се хапват като междинни хранения и обратно.
+      Можете да <span className="text-green-400 font-medium">редувате ястията</span> според нуждите си.
     </li>
     <li>
-      Ако не харесвате дадено ястие, презаредете страницата или променете филтрите, за да получите нова комбинация.
+      Ако не харесвате ястие, презаредете страницата или променете филтрите.
     </li>
     <li>
-      Месото в режима се съобразява с избраните предпочитания – ако сте посочили <span className="text-green-400 font-medium">„без пиле“</span>, то няма да бъде включено.
+      Протеинът се съобразява с предпочитанията – напр. <span className="text-green-400 font-medium">„без пиле“</span> няма да се включи.
     </li>
   </ul>
 </div>
@@ -508,8 +529,8 @@ function NavLink({ href, label }: { href: string; label: string }) {
               <th className="w-[180px] py-3 px-4 border-r border-gray-700">Закуска</th>
               <th className="w-[180px] py-3 px-4 border-r border-gray-700">Обяд</th>
               <th className="w-[180px] py-3 px-4 border-r border-gray-700">Вечеря</th>
-              <th className="w-[140px] py-3 px-4 border-r border-gray-700">Снакс</th>
-              <th className="w-[140px] py-3 px-4 rounded-tr-md">Макроси</th>
+              <th className="w-[240px] py-3 px-4 border-r border-gray-700">Снакс</th>
+              <th className="w-[80px] py-3 px-4 rounded-tr-md">Макроси</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-700">
@@ -524,9 +545,11 @@ function NavLink({ href, label }: { href: string; label: string }) {
 
                 {(["breakfast", "lunch", "dinner", "snack"] as const).map((mealType) => (
                   <td
-                    key={mealType}
-                    className="border-r border-gray-700 py-4 px-4 align-top max-w-[180px] text-gray-300 whitespace-normal break-words"
-                  >
+  key={mealType}
+  className={`border-r border-gray-700 py-4 px-4 align-top text-gray-300 whitespace-normal break-words ${
+    mealType === "snack" ? "max-w-[220px]" : "max-w-[180px]"
+  }`}
+>
                     {day.meals[mealType].length > 0 ? (
                       day.meals[mealType].map((meal) => (
                         <div
@@ -647,19 +670,21 @@ function NavLink({ href, label }: { href: string; label: string }) {
   </button>
 
   <button
-    onClick={() => setShowShoppingList(!showShoppingList)}
-    className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded shadow transition-colors w-full sm:w-auto"
-  >
-    🛒 Списък за пазаруване
-  </button>
+  onClick={() => setShowShoppingList(!showShoppingList)}
+  className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded shadow transition-colors w-full sm:w-auto"
+>
+  🛒 Списък за пазаруване
+</button>
+
 </footer>
+
 {showShoppingList && (
   <section className="max-w-5xl mx-auto px-4 sm:px-6 py-6">
     <div className="bg-gray-800 p-4 rounded-xl shadow-md border border-green-500 text-white">
       <h2 className="text-green-400 text-lg font-semibold mb-4">
         🛒 Списък за пазаруване
       </h2>
-      <ul className="space-y-2 list-disc list-inside">
+      <ul className="grid grid-cols-2 gap-2 list-disc list-inside">
         {generateShoppingList().map((item, idx) => (
           <li key={idx} className="text-gray-300">
             <span className="text-white font-medium">{item.name}</span> – {item.amount} {item.unit}
