@@ -1,0 +1,113 @@
+// src/lib/translations.ts
+export const translations = {
+   bg: {
+    nav: {
+      home: "Начало",
+      calculator: "Калкулатор",
+      personal: "Персонални режими",
+      plans: "Режими",
+      meals: "Ястия",
+    },
+     footer: {
+      contacts: "Контакти",
+      quick: "Бързи връзки",
+      follow: "Последвай ни",
+      rights: "Всички права запазени.",
+      address: "София, България",
+      phone: "Телефон:",
+    },
+     Main:{
+      maintain: "Подържане",
+      Gain:"Качване",
+      lose:"Сваляне",
+      heading: "Хранителен режим",
+    warning: "⚠️ Използвани са стандартни 2000 kcal",
+    calculateButton: "Изчисли калориите",
+    caloriesLabel: "Калории за ",
+    proteinLabel: "Протеин",
+    goalLabel: "Цел",
+    dietLabel: "Диета",
+    meatFilterLabel: 'Опция "Без"',
+    meatOptions: {
+      all: "Без изключване",
+      noChicken: "Без пиле",
+      noBeef: "Без говеждо",
+      noPork: "Без свинско",
+      noFish: "Без риба",
+      noSupplements: "Без добавки",
+      noVegan: "Без веган протеини",
+      noEgg: "Без яйца",
+      noDairy: "Без млечни продукти",
+    },
+    infoHeading: "🧠 Информация за режима",
+    infoItems: [
+      'Режимът е автоматично генериран спрямо калории, цел и диета.',
+      'Ястията балансират калории и протеин за деня.',
+      'Можете да редувате ястията според нуждите си.',
+      'Ако не харесвате ястие, презаредете страницата или променете филтрите.',
+      'Протеинът се съобразява с предпочитанията – напр. "без пиле" няма да се включи.',
+    ],
+    carb:"Въглехидрати:",
+    fat:"Мазнини:",
+    calories:"Калорий:",
+  },
+
+
+   },
+   
+  en: {
+    nav: {
+      home: "Home",
+      calculator: "Calculator",
+      personal: "Personal Plans",
+      plans: "Plans",
+      meals: "Meals",
+    },
+    footer: {
+      contacts: "Contacts",
+      quick: "Quick Links",
+      follow: "Follow us",
+      rights: "All rights reserved.",
+      address: "Sofia, Bulgaria",
+      phone: "Phone:",
+    },
+    Main:{
+      maintain: "Maintnain weight",
+      Gain:"Gain weight",
+      lose:"Lose weight",
+       heading: "Meal Plan",
+    warning: "⚠️ Standard 2000 kcal used",
+    calculateButton: "Calculate calories",
+    caloriesLabel: "Calories to ",
+    proteinLabel: "Protein",
+    goalLabel: "Goal",
+    dietLabel: "Diet",
+    meatFilterLabel: 'Exclude option',
+    meatOptions: {
+      all: "No exclusion",
+      noChicken: "No chicken",
+      noBeef: "No beef",
+      noPork: "No pork",
+      noFish: "No fish",
+      noSupplements: "No supplements",
+      noVegan: "No vegan protein",
+      noEgg: "No eggs",
+      noDairy: "No dairy",
+    },
+    infoHeading: "🧠 Plan Information",
+    infoItems: [
+      "The plan is automatically generated based on calories, goal, and diet.",
+      "Meals balance calories and protein for the day.",
+      "You can alternate meals according to your needs.",
+      "If you don't like a meal, refresh the page or change the filters.",
+      'Protein respects preferences – e.g., "no chicken" will not be included.',
+    ],
+    carb:"Carbs:",
+    fat:"Fat:",
+    calories:"Calories:",
+  },
+  },
+
+} as const;
+
+export type Lang = keyof typeof translations;

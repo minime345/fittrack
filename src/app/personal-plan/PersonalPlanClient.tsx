@@ -8,8 +8,10 @@ import jsPDF from "jspdf";
 import { motion } from "framer-motion";
 import { Menu } from "lucide-react";
 import { AnimatePresence } from "framer-motion";
-
+import { translations, type Lang } from "@/lib/translations-plans";
+import { useLang } from "@/context/LangContext";
 import "@/fonts/Roboto-Regular.js";
+import { Main } from "next/document";
 
 type Goal = "maintain" | "lose" | "gain";
 type Diet = "all" | "balanced" | "high-protein" | "keto" | "vegan" | "vegetarian";
@@ -27,8 +29,22 @@ type MeatType =
 export default function PersonalPlanPage() {
   const searchParams = useSearchParams();
   const baseCalories = Number(searchParams.get("calories")) || 2000;
-  const currentYear = new Date().getFullYear();
+ const currentYear = new Date().getFullYear();
 const [showShoppingList, setShowShoppingList] = useState(false);
+const [lang, setLang] = useState<Lang>("bg"); // default bg
+     useEffect(() => {
+        const saved = localStorage.getItem("lang");
+        if (saved === "en" || saved === "bg") {
+          setLang(saved);
+        }
+      }, []);
+    
+      const toggleLang = () => {
+        const newLang = lang === "bg" ? "en" : "bg";
+        setLang(newLang);
+        localStorage.setItem("lang", newLang);
+      };
+      const t = translations[lang] || translations.bg;
 
   const [goal, setGoal] = useState<Goal>("maintain");
   const [diet, setDiet] = useState<Diet>("all");
@@ -85,9 +101,9 @@ function generateShoppingList() {
   >([]);
 
   const goalLabels: Record<Goal, string> = {
-    maintain: "Поддържане",
-    lose: "Отслабване",
-    gain: "Качване",
+    maintain: t.Main.maintain,
+    lose: t.Main.lose,
+    gain: t.Main.Gain,
   };
 
   const dietLabels: Record<Diet, string> = {
@@ -375,79 +391,91 @@ function NavLink({ href, label }: { href: string; label: string }) {
   return (
       <main className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-800 text-white font-sans">
        <header className="sticky top-0 z-50 backdrop-blur-md bg-white/5 border-b border-white/10 shadow-md">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
-                <Logo />
-                <nav className="hidden md:flex gap-10">
-                  <NavLink href="/" label="Начало" />
-                  <NavLink href="/calculator" label="Калкулатор" />
-                  <NavLink href="/personal-plan" label="Персонални режими" />
-                  <NavLink href="/plans" label="Режими" />
-                  <NavLink href="/meals" label="Ястия" />
-                </nav>
-                <div className="md:hidden">
-                  <button onClick={() => setIsOpen(!isOpen)}>
-                    <Menu className="w-6 h-6 text-white" />
-                  </button>
-                </div>
-              </div>
-      
-              {isOpen && (
-                <div className="md:hidden bg-black/80 px-6 pb-4">
-                  <div className="flex flex-col gap-4">
-                    <NavLink href="/" label="Начало" />
-                    <NavLink href="/calculator" label="Калкулатор" />
-                    <NavLink href="/personal-plan" label="Персонални режими" />
-                    <NavLink href="/plans" label="Режими" />
-                    <NavLink href="/meals" label="Ястия" />
-                  </div>
-                </div>
-              )}
-            </header>
-
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
+                     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+                       <Logo />
+                       <div className="flex items-center gap-6">
+                         <nav className="hidden md:flex gap-10">
+                           <NavLink href="/" label={t.nav.home} />
+                           <NavLink href="/calculator" label={t.nav.calculator} />
+                           <NavLink href="/personal-plan" label={t.nav.personal} />
+                           <NavLink href="/plans" label={t.nav.plans} />
+                           <NavLink href="/meals" label={t.nav.meals} />
+                         </nav>
+                         <button
+                           onClick={toggleLang}
+                           aria-label="Switch language"
+                           className="px-3 py-1 border border-green-400 text-green-400 rounded-lg hover:bg-green-500 hover:text-black transition text-sm font-medium"
+                         >
+                           {lang === "bg" ? "EN" : "BG"}
+                         </button>
+                         <div className="md:hidden">
+                           <button onClick={() => setIsOpen(!isOpen)} aria-label="Toggle menu">
+                             <Menu className="w-6 h-6 text-white" />
+                           </button>
+                         </div>
+                       </div>
+                     </div>
+             
+                     {isOpen && (
+                       <div className="md:hidden bg-black/80 px-6 pb-4">
+                         <div className="flex flex-col gap-4">
+                           <NavLink href="/" label={t.nav.home} />
+                           <NavLink href="/calculator" label={t.nav.calculator} />
+                           <NavLink href="/personal-plan" label={t.nav.personal} />
+                           <NavLink href="/plans" label={t.nav.plans} />
+                           <NavLink href="/meals" label={t.nav.meals} />
+                           <button
+                             onClick={toggleLang}
+                             className="mt-2 w-fit px-3 py-1 border border-green-400 text-green-400 rounded-lg hover:bg-green-500 hover:text-black transition text-sm font-medium"
+                           >
+                             {lang === "bg" ? "EN" : "BG"}
+                           </button>
+                         </div>
+                       </div>
+                     )}
+                   </header>
+<section className="max-w-5xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
   <motion.h1
-  initial={{ opacity: 0, y: -10 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.5 }}
-  className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-teal-300 text-center mb-6"
->
-  Хранителен режим
-</motion.h1>
-
-{baseCalories === 2000 && (
-  <motion.div
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    transition={{ delay: 0.2 }}
-    className="text-center mb-4"
+    initial={{ opacity: 0, y: -10 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5 }}
+    className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-teal-300 text-center mb-6"
   >
-    <p className="text-yellow-400 text-sm">
-      ⚠️ Използвани са стандартни 2000 kcal
-    </p>
-    <Link href="/calculator">
-      <button className="mt-2 bg-green-500 text-black font-semibold px-4 py-1 rounded-lg hover:bg-green-400 transition text-sm">
-        Изчисли калориите
-      </button>
-    </Link>
-  </motion.div>
-)}
+    {t.Main.heading}
+  </motion.h1>
 
-<div className="bg-gray-800 px-4 py-3 rounded-lg shadow-md text-white border border-green-500 text-base sm:text-lg w-full sm:max-w-md mx-auto">
+  {baseCalories === 2000 && (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 0.2 }}
+      className="text-center mb-4"
+    >
+      <p className="text-yellow-400 text-sm">{t.Main.warning}</p>
+      <Link href="/calculator">
+        <button className="mt-2 bg-green-500 text-black font-semibold px-4 py-1 rounded-lg hover:bg-green-400 transition text-sm">
+          {t.Main.calculateButton}
+        </button>
+      </Link>
+    </motion.div>
+  )}
+
+  <div className="bg-gray-800 px-4 py-3 rounded-lg shadow-md text-white border border-green-500 text-base sm:text-lg w-full sm:max-w-md mx-auto">
   <div className="flex justify-between items-center">
     <span className="text-green-400 font-semibold">
-      Калории за {goalLabels[goal]}:
+      {t.Main.calculateButton} {goalLabels[goal]}:
     </span>
     <span>{getTargetCalories()} kcal</span>
   </div>
   <div className="flex justify-between items-center border-t border-gray-700 mt-2 pt-2">
-    <span className="text-green-400 font-semibold">Протеин:</span>
+     <span className="text-green-400 font-semibold">{t.Main.proteinLabel}:</span>
     <span>{proteinMin} – {proteinMax} g</span>
   </div>
 </div>
 
-        <div className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center mb-10 text-sm">
+  <div className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center mb-10 text-sm">
           <div>
-            <label className="block mb-1">Цел</label>
+             <label className="block mb-1">{t.Main.goalLabel}</label>
             <select
               className="bg-gray-800 text-white rounded px-3 py-2 w-full min-w-[160px]"
               value={goal}
@@ -462,7 +490,7 @@ function NavLink({ href, label }: { href: string; label: string }) {
           </div>
 
           <div>
-            <label className="block mb-1">Диета</label>
+            <label className="block mb-1">{t.Main.dietLabel}</label>
             <select
               className="bg-gray-800 text-white rounded px-3 py-2 w-full min-w-[160px]"
               value={diet}
@@ -476,49 +504,37 @@ function NavLink({ href, label }: { href: string; label: string }) {
             </select>
           </div>
           <div>
-  <label className="block mb-1">Опция "Без"</label>
+  <label className="block mb-1">{t.Main.meatFilterLabel}</label>
  <select
     className="bg-gray-800 text-white rounded px-3 py-2 w-full min-w-[160px]"
     value={meatFilter}
     onChange={(e) => setMeatFilter(e.target.value as MeatType)}
     >
-  <option value="all">Без изключване</option>
-  <option value="no-chicken">Без пиле</option>
-  <option value="no-beef">Без говеждо</option>
-  <option value="no-pork">Без свинско</option>
-  <option value="no-fish">Без риба</option>
-  <option value="no-supplements">Без добавки</option>
-  <option value="no-vegan">Без веган протеини</option>
-  <option value="no-egg">Без яйца</option>
-  <option value="no-dairy">Без млечни продукти</option>
+ <option value="all">{t.Main.meatOptions.all}</option>
+        <option value="no-chicken">{t.Main.meatOptions.noChicken}</option>
+        <option value="no-beef">{t.Main.meatOptions.noBeef}</option>
+        <option value="no-pork">{t.Main.meatOptions.noPork}</option>
+        <option value="no-fish">{t.Main.meatOptions.noFish}</option>
+        <option value="no-supplements">{t.Main.meatOptions.noSupplements}</option>
+        <option value="no-vegan">{t.Main.meatOptions.noVegan}</option>
+        <option value="no-egg">{t.Main.meatOptions.noEgg}</option>
+        <option value="no-dairy">{t.Main.meatOptions.noDairy}</option>
 </select>
 </div>
 
 <div className="bg-gradient-to-br from-gray-800 to-gray-900 border border-green-500/40 rounded-xl p-3 text-xs sm:text-sm text-gray-200 shadow-inner mb-6">
-  <h2 className="text-green-400 text-base font-semibold mb-1 flex items-center gap-2">
-    🧠 Информация за режима
-  </h2>
-  <ul className="space-y-0.5 list-disc list-inside text-gray-300">
-    <li>
-      Режимът е <span className="text-green-400 font-medium">автоматично генериран</span> спрямо калории, цел и диета.
-    </li>
-    <li>
-      Ястията балансират калории и протеин за деня.
-    </li>
-    <li>
-      Можете да <span className="text-green-400 font-medium">редувате ястията</span> според нуждите си.
-    </li>
-    <li>
-      Ако не харесвате ястие, презаредете страницата или променете филтрите.
-    </li>
-    <li>
-      Протеинът се съобразява с предпочитанията – напр. <span className="text-green-400 font-medium">„без пиле“</span> няма да се включи.
-    </li>
-  </ul>
-</div>
+      <h2 className="text-green-400 text-base font-semibold mb-1 flex items-center gap-2">
+        {t.Main.infoHeading}
+      </h2>
+      <ul className="space-y-0.5 list-disc list-inside text-gray-300">
+        {t.Main.infoItems.map((item, index) => (
+          <li key={index}>{item}</li>
+        ))}
+      </ul>
+    </div>
+  </div>
 
-        </div>
-
+  
 
       {/* --- Десктоп: таблица с разграфяване --- */}
       <div className="hidden md:block overflow-x-auto rounded-lg shadow-lg border border-gray-800 bg-gray-900 text-gray-100 max-w-full">
@@ -585,10 +601,10 @@ function NavLink({ href, label }: { href: string; label: string }) {
                 ))}
 
                 <td className="py-4 px-4 text-xs font-mono text-green-400 text-center whitespace-nowrap">
-                  <div>Калории: <span className="font-semibold">{day.total.kcal}</span> kcal</div>
-                  <div>Протеин: <span className="font-semibold">{day.total.protein}</span> g</div>
-                  <div>Въглехидрати: <span className="font-semibold">{day.total.carbs}</span> g</div>
-                  <div>Мазнини: <span className="font-semibold">{day.total.fat}</span> g</div>
+                  <div>{t.Main.calories} <span className="font-semibold">{day.total.kcal}</span> kcal</div>
+                  <div>{t.Main.proteinLabel} <span className="font-semibold">{day.total.protein}</span> g</div>
+                  <div>{t.Main.carb}<span className="font-semibold">{day.total.carbs}</span> g</div>
+                  <div>{t.Main.fat} <span className="font-semibold">{day.total.fat}</span> g</div>
                 </td>
               </tr>
             ))}
@@ -649,10 +665,10 @@ function NavLink({ href, label }: { href: string; label: string }) {
             ))}
 
             <div className="text-green-400 font-mono text-xs space-y-1 mt-3 text-center border-t border-gray-700 pt-3">
-              <div>Калории: <span className="font-semibold">{day.total.kcal}</span> kcal</div>
-              <div>Протеин: <span className="font-semibold">{day.total.protein}</span> g</div>
-              <div>Въглехидрати: <span className="font-semibold">{day.total.carbs}</span> g</div>
-              <div>Мазнини: <span className="font-semibold">{day.total.fat}</span> g</div>
+              <div>{t.Main.calories} <span className="font-semibold">{day.total.kcal}</span> kcal</div>
+              <div>{t.Main.proteinLabel} <span className="font-semibold">{day.total.protein}</span> g</div>
+              <div>{t.Main.carb} <span className="font-semibold">{day.total.carbs}</span> g</div>
+              <div>{t.Main.fat} <span className="font-semibold">{day.total.fat}</span> g</div>
             </div>
           </div>
         ))}
@@ -790,10 +806,10 @@ function NavLink({ href, label }: { href: string; label: string }) {
           <p className="text-sm mb-3 text-gray-300">{selectedMeal.recipe}</p>
         )}
         <div className="text-sm text-gray-400 space-y-1 font-mono">
-          <div>Калории: <span className="text-white">{selectedMeal.kcal}</span> kcal</div>
-          <div>Протеин: <span className="text-white">{selectedMeal.protein}</span> g</div>
-          <div>Въглехидрати: <span className="text-white">{selectedMeal.carbs}</span> g</div>
-          <div>Мазнини: <span className="text-white">{selectedMeal.fat}</span> g</div>
+          <div>{t.Main.calories} <span className="text-white">{selectedMeal.kcal}</span> kcal</div>
+          <div>{t.Main.proteinLabel} <span className="text-white">{selectedMeal.protein}</span> g</div>
+          <div>{t.Main.carb}<span className="text-white">{selectedMeal.carbs}</span> g</div>
+          <div>{t.Main.fat} <span className="text-white">{selectedMeal.fat}</span> g</div>
           <div>Тегло: <span className="text-white">{selectedMeal.weight}</span> g</div>
         </div>
       </div>

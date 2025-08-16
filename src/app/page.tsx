@@ -3,11 +3,15 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Menu } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { MotionH1 } from "@/components/motion/MotionH1";
-import { MotionP } from '@/components/motion/MotionP';
+import { MotionP } from "@/components/motion/MotionP";
 import { MotionDiv } from "@/components/motion/MotionDiv";
+
+
+import { translations, type Lang } from "@/lib/translations"
+import { useLang } from "@/context/LangContext";
 
 function Logo() {
   return (
@@ -30,43 +34,85 @@ function NavLink({ href, label }: { href: string; label: string }) {
     </Link>
   );
 }
-
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
+  const { lang, setLang } = useLang();
   const currentYear = new Date().getFullYear();
+
+  // Задаваме fallback, за да не счупи рендера
+  const t = translations[lang] || translations.bg;
+
+  useEffect(() => {
+    const saved = localStorage.getItem("lang");
+    if (saved === "en" || saved === "bg") {
+      setLang(saved);
+    }
+  }, [setLang]);
+
+  const toggleLang = () => {
+    const newLang = lang === "bg" ? "en" : "bg";
+    setLang(newLang);
+    localStorage.setItem("lang", newLang);
+  };
+
+
+  
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-800 text-white font-sans">
-      {/* Navigation */}
-      <header className="sticky top-0 z-50 backdrop-blur-md bg-white/5 border-b border-white/10 shadow-md">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
-                <Logo />
-                <nav className="hidden md:flex gap-10">
-                  <NavLink href="/" label="Начало" />
-                  <NavLink href="/calculator" label="Калкулатор" />
-                  <NavLink href="/personal-plan" label="Персонални режими" />
-                  <NavLink href="/plans" label="Режими" />
-                  <NavLink href="/meals" label="Ястия" />
-                </nav>
-                <div className="md:hidden">
-                  <button onClick={() => setIsOpen(!isOpen)}>
-                    <Menu className="w-6 h-6 text-white" />
-                  </button>
-                </div>
-              </div>
-      
-              {isOpen && (
-                <div className="md:hidden bg-black/80 px-6 pb-4">
-                  <div className="flex flex-col gap-4">
-                    <NavLink href="/" label="Начало" />
-                    <NavLink href="/calculator" label="Калкулатор" />
-                    <NavLink href="/personal-plan" label="Персонални режими" />
-                    <NavLink href="/plans" label="Режими" />
-                    <NavLink href="/meals" label="Ястия" />
+          {/* Navigation */}
+                <header className="sticky top-0 z-50 backdrop-blur-md bg-white/5 border-b border-white/10 shadow-md">
+                  <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+                    <Logo />
+          
+                    {/* Навигация + бутон вдясно */}
+                    <div className="flex items-center gap-6">
+                      <nav className="hidden md:flex gap-10">
+                        <NavLink href="/" label={t.nav.home} />
+                        <NavLink href="/calculator" label={t.nav.calculator} />
+                        <NavLink href="/personal-plan" label={t.nav.personal} />
+                        <NavLink href="/plans" label={t.nav.plans} />
+                        <NavLink href="/meals" label={t.nav.meals} />
+                      </nav>
+          
+                      {/* Бутон за език */}
+                      <button
+                        onClick={toggleLang}
+                        aria-label="Switch language"
+                        className="px-3 py-1 border border-green-400 text-green-400 rounded-lg hover:bg-green-500 hover:text-black transition text-sm font-medium"
+                      >
+                        {lang === "bg" ? "EN" : "BG"}
+                      </button>
+          
+                      {/* Mobile menu button */}
+                      <div className="md:hidden">
+                        <button onClick={() => setIsOpen(!isOpen)} aria-label="Toggle menu">
+                          <Menu className="w-6 h-6 text-white" />
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              )}
-            </header>
+          
+                  {isOpen && (
+                    <div className="md:hidden bg-black/80 px-6 pb-4">
+                      <div className="flex flex-col gap-4">
+                        <NavLink href="/" label={t.nav.home} />
+                        <NavLink href="/calculator" label={t.nav.calculator} />
+                        <NavLink href="/personal-plan" label={t.nav.personal} />
+                        <NavLink href="/plans" label={t.nav.plans} />
+                        <NavLink href="/meals" label={t.nav.meals} />
+          
+                        <button
+                          onClick={toggleLang}
+                          className="mt-2 w-fit px-3 py-1 border border-green-400 text-green-400 rounded-lg hover:bg-green-500 hover:text-black transition text-sm font-medium"
+                        >
+                          {lang === "bg" ? "EN" : "BG"}
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </header>
+
       {/* Hero Section */}
       <section className="max-w-6xl mx-auto text-center px-6 py-24">
         <MotionH1
@@ -75,7 +121,7 @@ export default function Home() {
           transition={{ duration: 0.6 }}
           className="text-4xl md:text-6xl font-extrabold text-green-400 mb-6"
         >
-          Добре дошъл във FitTrack
+          {t.homepage.Title}
         </MotionH1>
 
         <MotionP
@@ -84,8 +130,7 @@ export default function Home() {
           transition={{ delay: 0.2, duration: 0.6 }}
           className="text-lg md:text-xl text-gray-300 leading-relaxed max-w-2xl mx-auto mb-10"
         >
-          Твоят личен асистент за калории, хранителни режими и здравословен начин на живот.
-          Изчисли своя дневен калориен прием, открий полезни режими и вдъхновяващи рецепти.
+          {t.homepage.Text}
         </MotionP>
 
         {/* Buttons */}
@@ -99,13 +144,13 @@ export default function Home() {
             href="/calculator"
             className="bg-green-500 hover:bg-green-400 text-black font-semibold px-6 py-3 rounded-lg shadow-lg transition"
           >
-            Изчисли калории
+            {t.homepage.btnCalc}
           </Link>
           <Link
             href="/personal-plan"
             className="border border-green-500 text-green-400 hover:bg-green-500 hover:text-black font-semibold px-6 py-3 rounded-lg shadow-lg transition"
           >
-            Персонален режим
+            {t.homepage.btnPersonal}
           </Link>
         </MotionDiv>
 
@@ -125,68 +170,48 @@ export default function Home() {
         </MotionDiv>
       </section>
 
-      {/* Footer Section */}
+      {/* Footer */}
       <footer className="bg-gray-900 text-gray-300 py-12 mt-12 border-t border-white/10">
         <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10">
-          {/* Contacts */}
           <div>
-            <h3 className="text-lg font-semibold text-white mb-4">Контакти</h3>
-            <p>Email: <a href="mailto:info@fittrack.bg" className="text-green-400 hover:underline">fittrackwebsite@gmail.com</a></p>
-            <p>Телефон: <a href="tel:+359888123456" className="text-green-400 hover:underline">+359 887 183 887</a></p>
-            <p>Адрес: София, България</p>
+            <h3 className="text-lg font-semibold text-white mb-4">{t.footer.contacts}</h3>
+            <p>
+              Email:{" "}
+              <a href="mailto:fittrackwebsite@gmail.com" className="text-green-400 hover:underline">
+                fittrackwebsite@gmail.com
+              </a>
+            </p>
+            <p>
+              Телефон:{" "}
+              <a href="tel:+359887183887" className="text-green-400 hover:underline">
+                +359 887 183 887
+              </a>
+            </p>
+            <p>София, България</p>
           </div>
 
-          {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold text-white mb-4">Бързи връзки</h3>
+            <h3 className="text-lg font-semibold text-white mb-4">{t.footer.quick}</h3>
             <ul className="space-y-2">
-              <li><Link href="/calculator" className="hover:text-green-400">Калкулатор</Link></li>
-              <li><Link href="/plans" className="hover:text-green-400">Режими</Link></li>
-              <li><Link href="/meals" className="hover:text-green-400">Ястия</Link></li>
-              <li><Link href="/personal-plan" className="hover:text-green-400">Персонални режими</Link></li>
+              <li><Link href="/calculator" className="hover:text-green-400">{t.nav.calculator}</Link></li>
+              <li><Link href="/plans" className="hover:text-green-400">{t.nav.plans}</Link></li>
+              <li><Link href="/meals" className="hover:text-green-400">{t.nav.meals}</Link></li>
+              <li><Link href="/personal-plan" className="hover:text-green-400">{t.nav.personal}</Link></li>
             </ul>
           </div>
 
-          {/* Social Media */}
           <div>
-            <h3 className="text-lg font-semibold text-white mb-4">Последвай ни</h3>
+            <h3 className="text-lg font-semibold text-white mb-4">{t.footer.follow}</h3>
             <ul className="space-y-2">
-              <li>
-                <a
-                  href="https://www.facebook.com/share/1GT8Ey98Re/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-green-400"
-                >
-                  Facebook
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://www.instagram.com/semetoitsmaname?igsh=MXg1ZHg1NXYxMHl2dQ=="
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-green-400"
-                >
-                  Instagram
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://www.youtube.com/yourchannel"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-green-400"
-                >
-                  YouTube
-                </a>
-              </li>
+              <li><a href="https://www.facebook.com/share/1GT8Ey98Re/" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">Facebook</a></li>
+              <li><a href="https://www.instagram.com/semetoitsmaname" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">Instagram</a></li>
+              <li><a href="https://www.youtube.com/yourchannel" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">YouTube</a></li>
             </ul>
           </div>
         </div>
 
         <div className="text-center mt-10 text-sm text-gray-500">
-          © {currentYear} FitTrack. Всички права запазени.
+          © {currentYear} FitTrack. {t.footer.rights}
         </div>
       </footer>
     </main>
