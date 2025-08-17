@@ -685,7 +685,29 @@ function NavLink({ href, label }: { href: string; label: string }) {
 
 </section>
 
-{/* Бутоните долу */}
+{/* Бутоните долу */} 
+<footer className="max-w-5xl mx-auto px-4 sm:px-6 py-6 flex flex-col gap-4 items-center"> 
+  <button onClick={downloadPDF} 
+  className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded shadow transition-colors w-full sm:w-auto" >
+     {t.Main.downloadPdf} 
+     </button> <button onClick={() => setShowShoppingList(!showShoppingList)}
+      className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded shadow transition-colors w-full sm:w-auto" >
+         {t.Main.shoppingListBtn} 
+         </button> 
+         </footer> {showShoppingList && 
+         ( <section className="max-w-5xl mx-auto px-4 sm:px-6 py-6"> 
+         <div className="bg-gray-800 p-4 rounded-xl shadow-md border border-green-500 text-white"> 
+          <h2 className="text-green-400 text-lg font-semibold mb-4"> 🛒 {t.Main.shoppingTitle} </h2>
+           <ul className="space-y-2 list-disc list-inside"> {generateShoppingList().map((item, idx) => ( <li key={idx} className="text-gray-300"> 
+            <span className="text-white font-medium">{item.name}</span> – {item.amount} {item.unit} 
+            </li> 
+            ))} 
+            </ul>
+             </div> 
+             </section> 
+            )}
+
+      {/* Footer секция */}
 <footer className="bg-gray-900 text-gray-300 py-12 mt-12 border-t border-white/10">
         <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10">
           <div>
@@ -705,68 +727,6 @@ function NavLink({ href, label }: { href: string; label: string }) {
             <p>
               {t.footer.address}
             </p>
-          </div>
-
-          <div>
-            <h3 className="text-lg font-semibold text-white mb-4">{t.footer.quick}</h3>
-            <ul className="space-y-2">
-              <li><Link href="/calculator" className="hover:text-green-400">{t.nav.calculator}</Link></li>
-              <li><Link href="/plans" className="hover:text-green-400">{t.nav.plans}</Link></li>
-              <li><Link href="/meals" className="hover:text-green-400">{t.nav.meals}</Link></li>
-              <li><Link href="/personal-plan" className="hover:text-green-400">{t.nav.personal}</Link></li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-lg font-semibold text-white mb-4">{t.footer.follow}</h3>
-            <ul className="space-y-2">
-              <li><a href="https://www.facebook.com/share/1GT8Ey98Re/" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">Facebook</a></li>
-              <li><a href="https://www.instagram.com/semetoitsmaname" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">Instagram</a></li>
-              <li><a href="https://www.youtube.com/yourchannel" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">YouTube</a></li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="text-center mt-10 text-sm text-gray-500">
-          © {currentYear} FitTrack. {t.footer.rights}
-        </div>
-      </footer>
-
-{showShoppingList && (
-  <section className="max-w-5xl mx-auto px-4 sm:px-6 py-6">
-    <div className="bg-gray-800 p-4 rounded-xl shadow-md border border-green-500 text-white">
-      <h2 className="text-green-400 text-lg font-semibold mb-4">
-        🛒 {t.Main.shoppingTitle}
-      </h2>
-      <ul className="space-y-2 list-disc list-inside">
-        {generateShoppingList().map((item, idx) => (
-          <li key={idx} className="text-gray-300">
-            <span className="text-white font-medium">{item.name}</span> – {item.amount} {item.unit}
-          </li>
-        ))}
-      </ul>
-    </div>
-  </section>
-)}
-
-      {/* Footer секция */}
-      <footer className="bg-gray-900 text-gray-300 py-12 mt-12 border-t border-white/10">
-        <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10">
-          <div>
-            <h3 className="text-lg font-semibold text-white mb-4">{t.footer.contacts}</h3>
-            <p>
-              Email:{" "}
-              <a href="mailto:fittrackwebsite@gmail.com" className="text-green-400 hover:underline">
-                fittrackwebsite@gmail.com
-              </a>
-            </p>
-            <p>
-              Телефон:{" "}
-              <a href="tel:+359887183887" className="text-green-400 hover:underline">
-                +359 887 183 887
-              </a>
-            </p>
-            <p>София, България</p>
           </div>
 
           <div>
