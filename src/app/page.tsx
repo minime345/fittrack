@@ -9,9 +9,10 @@ import { MotionH1 } from "@/components/motion/MotionH1";
 import { MotionP } from "@/components/motion/MotionP";
 import { MotionDiv } from "@/components/motion/MotionDiv";
 
-
-import { translations, type Lang } from "@/lib/translations"
+import { translations, type Lang } from "@/lib/translations";
 import { useLang } from "@/context/LangContext";
+
+import { Analytics } from "@vercel/analytics/react";
 
 function Logo() {
   return (
@@ -34,6 +35,7 @@ function NavLink({ href, label }: { href: string; label: string }) {
     </Link>
   );
 }
+
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const { lang, setLang } = useLang();
@@ -55,57 +57,53 @@ export default function Home() {
     localStorage.setItem("lang", newLang);
   };
 
-
-  
-
   return (
     <main className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-800 text-white font-sans">
-         <header className="sticky top-0 z-50 backdrop-blur-md bg-white/5 border-b border-white/10 shadow-md">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
-    <Logo />
+      <header className="sticky top-0 z-50 backdrop-blur-md bg-white/5 border-b border-white/10 shadow-md">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+          <Logo />
 
-    <div className="flex items-center gap-6">
-      {/* Навигация за десктоп */}
-      <nav className="hidden md:flex gap-10">
-        <NavLink href="/" label={t.nav.home} />
-        <NavLink href="/calculator" label={t.nav.calculator} />
-        <NavLink href="/personal-plan" label={t.nav.personal} />
-        <NavLink href="/plans" label={t.nav.plans} />
-        <NavLink href="/meals" label={t.nav.meals} />
-      </nav>
+          <div className="flex items-center gap-6">
+            {/* Навигация за десктоп */}
+            <nav className="hidden md:flex gap-10">
+              <NavLink href="/" label={t.nav.home} />
+              <NavLink href="/calculator" label={t.nav.calculator} />
+              <NavLink href="/personal-plan" label={t.nav.personal} />
+              <NavLink href="/plans" label={t.nav.plans} />
+              <NavLink href="/meals" label={t.nav.meals} />
+            </nav>
 
-      {/* Бутон за смяна на език – остава само един път */}
-      <button
-        onClick={toggleLang}
-        aria-label="Switch language"
-        className="px-3 py-1 border border-green-400 text-green-400 rounded-lg hover:bg-green-500 hover:text-black transition text-sm font-medium"
-      >
-        {lang === "bg" ? "BG" : "EN"}
-      </button>
+            {/* Бутон за смяна на език – остава само един път */}
+            <button
+              onClick={toggleLang}
+              aria-label="Switch language"
+              className="px-3 py-1 border border-green-400 text-green-400 rounded-lg hover:bg-green-500 hover:text-black transition text-sm font-medium"
+            >
+              {lang === "bg" ? "BG" : "EN"}
+            </button>
 
-      {/* Mobile menu button */}
-      <div className="md:hidden">
-        <button onClick={() => setIsOpen(!isOpen)} aria-label="Toggle menu">
-          <Menu className="w-6 h-6 text-white" />
-        </button>
-      </div>
-    </div>
-  </div>
+            {/* Mobile menu button */}
+            <div className="md:hidden">
+              <button onClick={() => setIsOpen(!isOpen)} aria-label="Toggle menu">
+                <Menu className="w-6 h-6 text-white" />
+              </button>
+            </div>
+          </div>
+        </div>
 
-  {/* Mobile menu – без бутон за език вътре */}
-  {isOpen && (
-    <div className="md:hidden bg-black/80 px-6 pb-4">
-      <div className="flex flex-col gap-4">
-        <NavLink href="/" label={t.nav.home} />
-        <NavLink href="/calculator" label={t.nav.calculator} />
-        <NavLink href="/personal-plan" label={t.nav.personal} />
-        <NavLink href="/plans" label={t.nav.plans} />
-        <NavLink href="/meals" label={t.nav.meals} />
-      </div>
-    </div>
-  )}
-</header>
-
+        {/* Mobile menu – без бутон за език вътре */}
+        {isOpen && (
+          <div className="md:hidden bg-black/80 px-6 pb-4">
+            <div className="flex flex-col gap-4">
+              <NavLink href="/" label={t.nav.home} />
+              <NavLink href="/calculator" label={t.nav.calculator} />
+              <NavLink href="/personal-plan" label={t.nav.personal} />
+              <NavLink href="/plans" label={t.nav.plans} />
+              <NavLink href="/meals" label={t.nav.meals} />
+            </div>
+          </div>
+        )}
+      </header>
 
       {/* Hero Section */}
       <section className="max-w-6xl mx-auto text-center px-6 py-24">
@@ -170,38 +168,79 @@ export default function Home() {
           <div>
             <h3 className="text-lg font-semibold text-white mb-4">{t.footer.contacts}</h3>
             <p>
-             Email:{" "}
+              Email:{" "}
               <a href="mailto:fittrackwebsite@gmail.com" className="text-green-400 hover:underline">
                 fittrackwebsite@gmail.com
               </a>
             </p>
             <p>
-              {t.footer.phone}:{" "}
+              {t.footer.phone}{" "}
               <a href="tel:+359887183887" className="text-green-400 hover:underline">
                 +359 887 183 887
               </a>
             </p>
-            <p>
-              {t.footer.address}
-            </p>
+            <p>{t.footer.address}</p>
           </div>
 
           <div>
             <h3 className="text-lg font-semibold text-white mb-4">{t.footer.quick}</h3>
             <ul className="space-y-2">
-              <li><Link href="/calculator" className="hover:text-green-400">{t.nav.calculator}</Link></li>
-              <li><Link href="/plans" className="hover:text-green-400">{t.nav.plans}</Link></li>
-              <li><Link href="/meals" className="hover:text-green-400">{t.nav.meals}</Link></li>
-              <li><Link href="/personal-plan" className="hover:text-green-400">{t.nav.personal}</Link></li>
+              <li>
+                <Link href="/calculator" className="hover:text-green-400">
+                  {t.nav.calculator}
+                </Link>
+              </li>
+              <li>
+                <Link href="/plans" className="hover:text-green-400">
+                  {t.nav.plans}
+                </Link>
+              </li>
+              <li>
+                <Link href="/meals" className="hover:text-green-400">
+                  {t.nav.meals}
+                </Link>
+              </li>
+              <li>
+                <Link href="/personal-plan" className="hover:text-green-400">
+                  {t.nav.personal}
+                </Link>
+              </li>
             </ul>
           </div>
 
           <div>
             <h3 className="text-lg font-semibold text-white mb-4">{t.footer.follow}</h3>
             <ul className="space-y-2">
-              <li><a href="https://www.facebook.com/share/1GT8Ey98Re/" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">Facebook</a></li>
-              <li><a href="https://www.instagram.com/semetoitsmaname" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">Instagram</a></li>
-              <li><a href="https://www.youtube.com/yourchannel" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">YouTube</a></li>
+              <li>
+                <a
+                  href="https://www.facebook.com/share/1GT8Ey98Re/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-green-400"
+                >
+                  Facebook
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.instagram.com/semetoitsmaname"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-green-400"
+                >
+                  Instagram
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.youtube.com/yourchannel"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-green-400"
+                >
+                  YouTube
+                </a>
+              </li>
             </ul>
           </div>
         </div>
@@ -210,6 +249,9 @@ export default function Home() {
           © {currentYear} FitTrack. {t.footer.rights}
         </div>
       </footer>
+
+      {/* Vercel Analytics */}
+      <Analytics />
     </main>
   );
 }
