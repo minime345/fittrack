@@ -70,49 +70,50 @@ export default function MealsPage() {
     <main className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-800 text-white font-sans">
       {/* Навигация */}
       <header className="sticky top-0 z-50 backdrop-blur-md bg-white/5 border-b border-white/10 shadow-md">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
-                <Logo />
-                <div className="flex items-center gap-6">
-                  <nav className="hidden md:flex gap-10">
-                    <NavLink href="/" label={t.nav.home} />
-                    <NavLink href="/calculator" label={t.nav.calculator} />
-                    <NavLink href="/personal-plan" label={t.nav.personal} />
-                    <NavLink href="/plans" label={t.nav.plans} />
-                    <NavLink href="/meals" label={t.nav.meals} />
-                  </nav>
-                  <button
-                    onClick={toggleLang}
-                    aria-label="Switch language"
-                    className="px-3 py-1 border border-green-400 text-green-400 rounded-lg hover:bg-green-500 hover:text-black transition text-sm font-medium"
-                  >
-                    {lang === "bg" ? "EN" : "BG"}
-                  </button>
-                  <div className="md:hidden">
-                    <button onClick={() => setIsOpen(!isOpen)} aria-label="Toggle menu">
-                      <Menu className="w-6 h-6 text-white" />
-                    </button>
-                  </div>
-                </div>
-              </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+          <Logo />
       
-              {isOpen && (
-                <div className="md:hidden bg-black/80 px-6 pb-4">
-                  <div className="flex flex-col gap-4">
-                    <NavLink href="/" label={t.nav.home} />
-                    <NavLink href="/calculator" label={t.nav.calculator} />
-                    <NavLink href="/personal-plan" label={t.nav.personal} />
-                    <NavLink href="/plans" label={t.nav.plans} />
-                    <NavLink href="/meals" label={t.nav.meals} />
-                    <button
-                      onClick={toggleLang}
-                      className="mt-2 w-fit px-3 py-1 border border-green-400 text-green-400 rounded-lg hover:bg-green-500 hover:text-black transition text-sm font-medium"
-                    >
-                      {lang === "bg" ? "EN" : "BG"}
-                    </button>
-                  </div>
-                </div>
-              )}
-            </header>
+          <div className="flex items-center gap-6">
+            {/* Навигация за десктоп */}
+            <nav className="hidden md:flex gap-10">
+              <NavLink href="/" label={t.nav.home} />
+              <NavLink href="/calculator" label={t.nav.calculator} />
+              <NavLink href="/personal-plan" label={t.nav.personal} />
+              <NavLink href="/plans" label={t.nav.plans} />
+              <NavLink href="/meals" label={t.nav.meals} />
+            </nav>
+      
+            {/* Бутон за смяна на език – остава само един път */}
+            <button
+              onClick={toggleLang}
+              aria-label="Switch language"
+              className="px-3 py-1 border border-green-400 text-green-400 rounded-lg hover:bg-green-500 hover:text-black transition text-sm font-medium"
+            >
+              {lang === "bg" ? "BG" : "EN"}
+            </button>
+      
+            {/* Mobile menu button */}
+            <div className="md:hidden">
+              <button onClick={() => setIsOpen(!isOpen)} aria-label="Toggle menu">
+                <Menu className="w-6 h-6 text-white" />
+              </button>
+            </div>
+          </div>
+        </div>
+      
+        {/* Mobile menu – без бутон за език вътре */}
+        {isOpen && (
+          <div className="md:hidden bg-black/80 px-6 pb-4">
+            <div className="flex flex-col gap-4">
+              <NavLink href="/" label={t.nav.home} />
+              <NavLink href="/calculator" label={t.nav.calculator} />
+              <NavLink href="/personal-plan" label={t.nav.personal} />
+              <NavLink href="/plans" label={t.nav.plans} />
+              <NavLink href="/meals" label={t.nav.meals} />
+            </div>
+          </div>
+        )}
+      </header>
 
       {/* Секция: Ястия */}
       <section className="max-w-7xl mx-auto px-6 py-12">
@@ -150,49 +151,52 @@ export default function MealsPage() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {visibleMeals.map((meal, i) => (
             <motion.div
-              key={meal.slug}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.05 }}
-              className="bg-gray-900/60 hover:bg-gray-800/80 transition rounded-2xl p-6 shadow-xl border border-white/10 backdrop-blur"
-            >
-              {meal.link ? (
-  <Link href={meal.link} className="block h-full">
-    <div className="flex items-center gap-4 mb-4">
-      <div className="text-4xl">{meal.icon}</div>
-      <h2 className="text-xl font-bold text-green-400">{meal.name}</h2>
+  key={meal.slug}
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: i * 0.05 }}
+  className="bg-gray-900/60 hover:bg-gray-800/80 transition rounded-2xl p-6 shadow-xl border border-white/10 backdrop-blur"
+>
+  {meal.link ? (
+    <Link href={meal.link} className="block h-full">
+      <div className="flex items-center gap-4 mb-4">
+        <div className="text-4xl">{meal.icon}</div>
+        <h2 className="text-xl font-bold text-green-400">{meal.name[lang]}</h2>
+      </div>
+      <div className="grid grid-cols-2 gap-4 text-sm text-gray-300 mb-2">
+        <div><span className="font-semibold text-white">{t.meals.cal}:</span> {meal.kcal}</div>
+        <div><span className="font-semibold text-white">{t.meals.prot}:</span> {meal.protein} г</div>
+        <div><span className="font-semibold text-white">{t.meals.carb}:</span> {meal.carbs} г</div>
+        <div><span className="font-semibold text-white">{t.meals.fat}:</span> {meal.fat} г</div>
+      </div>
+      <div className="text-xs text-gray-400 italic">
+        {t.meals.category}: {meal.categories.join(", ")}
+      </div>
+    </Link>
+  ) : (
+    <div className="block h-full cursor-default">
+      <div className="flex items-center gap-4 mb-4">
+        <div className="text-4xl">{meal.icon}</div>
+        <h2 className="text-xl font-bold text-green-400">{meal.name[lang]}</h2>
+      </div>
+      <div className="grid grid-cols-2 gap-4 text-sm text-gray-300 mb-2">
+        <div><span className="font-semibold text-white">{t.meals.cal}:</span> {meal.kcal}</div>
+        <div><span className="font-semibold text-white">{t.meals.prot}:</span> {meal.protein} г</div>
+        <div><span className="font-semibold text-white">{t.meals.carb}:</span> {meal.carbs} г</div>
+        <div><span className="font-semibold text-white">{t.meals.fat}:</span> {meal.fat} г</div>
+      </div>
+      <div className="text-xs text-gray-400 italic mb-2">
+        {t.meals.category}: {meal.categories.join(", ")}
+      </div>
+      <div className="text-sm text-white mt-2 whitespace-pre-wrap">
+        <span className="font-semibold text-green-400">
+          {lang === "bg" ? "Рецепта:" : "Recipe:"}
+        </span>{" "}
+        {meal.recipe[lang]}
+      </div>
     </div>
-    <div className="grid grid-cols-2 gap-4 text-sm text-gray-300 mb-2">
-      <div><span className="font-semibold text-white">{t.meals.cal}:</span> {meal.kcal}</div>
-      <div><span className="font-semibold text-white">{t.meals.prot}:</span> {meal.protein} г</div>
-      <div><span className="font-semibold text-white">{t.meals.carb}:</span> {meal.carbs} г</div>
-      <div><span className="font-semibold text-white">{t.meals.fat}:</span> {meal.fat} г</div>
-    </div>
-    <div className="text-xs text-gray-400 italic">
-      {t.meals.category}: {meal.categories.join(", ")}
-    </div>
-  </Link>
-) : (
-  <div className="block h-full cursor-default">
-    <div className="flex items-center gap-4 mb-4">
-      <div className="text-4xl">{meal.icon}</div>
-      <h2 className="text-xl font-bold text-green-400">{meal.name}</h2>
-    </div>
-    <div className="grid grid-cols-2 gap-4 text-sm text-gray-300 mb-2">
-      <div><span className="font-semibold text-white">{t.meals.cal}:</span> {meal.kcal}</div>
-      <div><span className="font-semibold text-white">{t.meals.prot}:</span> {meal.protein} г</div>
-      <div><span className="font-semibold text-white">{t.meals.carb}:</span> {meal.carbs} г</div>
-      <div><span className="font-semibold text-white">{t.meals.fat}:</span> {meal.fat} г</div>
-    </div>
-    <div className="text-xs text-gray-400 italic mb-2">
-      {t.meals.category}: {meal.categories.join(", ")}
-    </div>
-    <div className="text-sm text-white mt-2 whitespace-pre-wrap">
-      <span className="font-semibold text-green-400">Рецепта:</span> {meal.recipe}
-    </div>
-  </div>
-)}
-            </motion.div>
+  )}
+</motion.div>
           ))}
         </div>
 

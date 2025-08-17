@@ -60,58 +60,52 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-800 text-white font-sans">
-          {/* Navigation */}
-                <header className="sticky top-0 z-50 backdrop-blur-md bg-white/5 border-b border-white/10 shadow-md">
-                  <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
-                    <Logo />
-          
-                    {/* Навигация + бутон вдясно */}
-                    <div className="flex items-center gap-6">
-                      <nav className="hidden md:flex gap-10">
-                        <NavLink href="/" label={t.nav.home} />
-                        <NavLink href="/calculator" label={t.nav.calculator} />
-                        <NavLink href="/personal-plan" label={t.nav.personal} />
-                        <NavLink href="/plans" label={t.nav.plans} />
-                        <NavLink href="/meals" label={t.nav.meals} />
-                      </nav>
-          
-                      {/* Бутон за език */}
-                      <button
-                        onClick={toggleLang}
-                        aria-label="Switch language"
-                        className="px-3 py-1 border border-green-400 text-green-400 rounded-lg hover:bg-green-500 hover:text-black transition text-sm font-medium"
-                      >
-                        {lang === "bg" ? "EN" : "BG"}
-                      </button>
-          
-                      {/* Mobile menu button */}
-                      <div className="md:hidden">
-                        <button onClick={() => setIsOpen(!isOpen)} aria-label="Toggle menu">
-                          <Menu className="w-6 h-6 text-white" />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-          
-                  {isOpen && (
-                    <div className="md:hidden bg-black/80 px-6 pb-4">
-                      <div className="flex flex-col gap-4">
-                        <NavLink href="/" label={t.nav.home} />
-                        <NavLink href="/calculator" label={t.nav.calculator} />
-                        <NavLink href="/personal-plan" label={t.nav.personal} />
-                        <NavLink href="/plans" label={t.nav.plans} />
-                        <NavLink href="/meals" label={t.nav.meals} />
-          
-                        <button
-                          onClick={toggleLang}
-                          className="mt-2 w-fit px-3 py-1 border border-green-400 text-green-400 rounded-lg hover:bg-green-500 hover:text-black transition text-sm font-medium"
-                        >
-                          {lang === "bg" ? "EN" : "BG"}
-                        </button>
-                      </div>
-                    </div>
-                  )}
-                </header>
+         <header className="sticky top-0 z-50 backdrop-blur-md bg-white/5 border-b border-white/10 shadow-md">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+    <Logo />
+
+    <div className="flex items-center gap-6">
+      {/* Навигация за десктоп */}
+      <nav className="hidden md:flex gap-10">
+        <NavLink href="/" label={t.nav.home} />
+        <NavLink href="/calculator" label={t.nav.calculator} />
+        <NavLink href="/personal-plan" label={t.nav.personal} />
+        <NavLink href="/plans" label={t.nav.plans} />
+        <NavLink href="/meals" label={t.nav.meals} />
+      </nav>
+
+      {/* Бутон за смяна на език – остава само един път */}
+      <button
+        onClick={toggleLang}
+        aria-label="Switch language"
+        className="px-3 py-1 border border-green-400 text-green-400 rounded-lg hover:bg-green-500 hover:text-black transition text-sm font-medium"
+      >
+        {lang === "bg" ? "BG" : "EN"}
+      </button>
+
+      {/* Mobile menu button */}
+      <div className="md:hidden">
+        <button onClick={() => setIsOpen(!isOpen)} aria-label="Toggle menu">
+          <Menu className="w-6 h-6 text-white" />
+        </button>
+      </div>
+    </div>
+  </div>
+
+  {/* Mobile menu – без бутон за език вътре */}
+  {isOpen && (
+    <div className="md:hidden bg-black/80 px-6 pb-4">
+      <div className="flex flex-col gap-4">
+        <NavLink href="/" label={t.nav.home} />
+        <NavLink href="/calculator" label={t.nav.calculator} />
+        <NavLink href="/personal-plan" label={t.nav.personal} />
+        <NavLink href="/plans" label={t.nav.plans} />
+        <NavLink href="/meals" label={t.nav.meals} />
+      </div>
+    </div>
+  )}
+</header>
+
 
       {/* Hero Section */}
       <section className="max-w-6xl mx-auto text-center px-6 py-24">
