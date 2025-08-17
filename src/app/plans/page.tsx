@@ -176,23 +176,25 @@ export default function Plans() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-gray-300 py-12 mt-12 border-t border-white/10">
+     <footer className="bg-gray-900 text-gray-300 py-12 mt-12 border-t border-white/10">
         <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10">
           <div>
             <h3 className="text-lg font-semibold text-white mb-4">{t.footer.contacts}</h3>
             <p>
-              Email:{" "}
+             Email:{" "}
               <a href="mailto:fittrackwebsite@gmail.com" className="text-green-400 hover:underline">
                 fittrackwebsite@gmail.com
               </a>
             </p>
             <p>
-              Телефон:{" "}
+              {t.footer.phone}:{" "}
               <a href="tel:+359887183887" className="text-green-400 hover:underline">
                 +359 887 183 887
               </a>
             </p>
-            <p>София, България</p>
+            <p>
+              {t.footer.address}
+            </p>
           </div>
 
           <div>
