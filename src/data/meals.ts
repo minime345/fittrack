@@ -75,7 +75,7 @@ export const meals = [
     },
     ingredients: [
       { name: { bg: "маруля", en: "lettuce" }, amount: 50, unit: "g" },
-      { name: { bg: "яйца", en: "egg" }, amount: 1, unit: "pcs" },
+      { name: { bg: "яйца", en: "eggs" }, amount: 1, unit: "pcs" },
       { name: { bg: "авокадо", en: "avocado" }, amount: 0.5, unit: "pcs" },
       { name: { bg: "бекон", en: "bacon" }, amount: 40, unit: "g" },
       { name: { bg: "зехтин", en: "olive oil" }, amount: 10, unit: "ml" }
@@ -364,7 +364,394 @@ export const meals = [
   mealType: ["snack"],
   proteinSource: "vegan"
 },
-
+  {
+    slug: "yogurt-honey-walnuts",
+    icon: "🥣",
+    kcal: 250,
+    protein: 12,
+    carbs: 20,
+    fat: 14,
+    weight: 200,
+    categories: ["vegetarian", "balanced", "snack"],
+    name: {
+      bg: "Кисело мляко с мед и орехи",
+      en: "Yogurt with Honey and Walnuts"
+    },
+    recipe: {
+      bg: "Смеси кисело мляко, 1 ч.л. мед и счукани орехи.",
+      en: "Mix yogurt with 1 tsp honey and crushed walnuts."
+    },
+    ingredients: [
+      { name: { bg: "кисело мляко", en: "yogurt" }, amount: 150, unit: "g" },
+      { name: { bg: "мед", en: "honey" }, amount: 5, unit: "g" },
+      { name: { bg: "орехи", en: "walnuts" }, amount: 15, unit: "g" }
+    ],
+    link: "",
+    mealType: ["snack", "breakfast"],
+    proteinSource: "dairy"
+  },
+  {
+    slug: "boiled-egg-avocado",
+    icon: "🥚",
+    kcal: 160,
+    protein: 8,
+    carbs: 2,
+    fat: 13,
+    weight: 100,
+    categories: ["keto", "carnivore", "snack"],
+    name: {
+      bg: "Варено яйце с резен авокадо",
+      en: "Boiled Egg with Avocado Slice"
+    },
+    recipe: {
+      bg: "Сервирай 1 варено яйце с 1/4 авокадо.",
+      en: "Serve 1 boiled egg with 1/4 avocado."
+    },
+    ingredients: [
+      { name: { bg: "яйце", en: "egg" }, amount: 1, unit: "бр." },
+      { name: { bg: "авокадо", en: "avocado" }, amount: 0.5, unit: "бр." }
+    ],
+    link: "",
+    mealType: ["snack", "breakfast"],
+    proteinSource: "egg"
+  },
+  {
+    slug: "vegan-protein-bar",
+    icon: "🌰",
+    kcal: 210,
+    protein: 12,
+    carbs: 18,
+    fat: 10,
+    weight: 50,
+    categories: ["vegan", "vegetarian", "high-protein", "snack"],
+    name: {
+      bg: "Веган протеинов бар с фурми и ядки",
+      en: "Vegan Protein Bar with Dates and Nuts"
+    },
+    recipe: {
+      bg: "Бар от фурми, ядки и растителен протеин.",
+      en: "Bar made of dates, nuts, and plant protein."
+    },
+    ingredients: [
+      { name: { bg: "фурми", en: "dates" }, amount: 20, unit: "g" },
+      { name: { bg: "ядки", en: "nuts" }, amount: 20, unit: "g" },
+      { name: { bg: "веган протеин", en: "vegan protein" }, amount: 10, unit: "g" }
+    ],
+    link: "",
+    mealType: ["snack"],
+    proteinSource: "vegan"
+  },
+  {
+    slug: "fresh-veggies-hummus",
+    icon: "🥕",
+    kcal: 150,
+    protein: 5,
+    carbs: 18,
+    fat: 7,
+    weight: 200,
+    categories: ["vegan", "vegetarian", "balanced", "snack"],
+    name: {
+      bg: "Пресни зеленчуци с хумус",
+      en: "Fresh Vegetables with Hummus"
+    },
+    recipe: {
+      bg: "Нарежи краставици, чушки и моркови, сервирай с хумус.",
+      en: "Slice cucumbers, peppers, and carrots, serve with hummus."
+    },
+    ingredients: [
+      { name: { bg: "краставици", en: "cucumbers" }, amount: 70, unit: "g" },
+      { name: { bg: "чушки", en: "peppers" }, amount: 70, unit: "g" },
+      { name: { bg: "морков", en: "carrot" }, amount: 1, unit: "бр." },
+      { name: { bg: "хумус", en: "hummus" }, amount: 30, unit: "g" }
+    ],
+    link: "",
+    mealType: ["snack"],
+    proteinSource: "vegan"
+  },
+  {
+    slug: "wholegrain-toast-avocado-egg",
+    icon: "🥑",
+    kcal: 350,
+    protein: 20,
+    carbs: 30,
+    fat: 18,
+    weight: 200,
+    categories: ["vegetarian", "balanced", "high-protein", "breakfast"],
+    name: {
+      bg: "Пълнозърнест тост с авокадо и яйце",
+      en: "Wholegrain Toast with Avocado and Egg"
+    },
+    recipe: {
+      bg: "Пълнозърнест тост с намачкано авокадо и пържено яйце.",
+      en: "Wholegrain toast with mashed avocado and fried egg."
+    },
+    ingredients: [
+      { name: { bg: "пълнозърнест хляб", en: "wholegrain bread" }, amount: 100, unit: "g" },
+      { name: { bg: "авокадо", en: "avocado" }, amount: 1, unit: "бр." },
+      { name: { bg: "яйце", en: "egg" }, amount: 1, unit: "бр." }
+    ],
+    link: "",
+    mealType: ["breakfast"],
+    proteinSource: "egg"
+  },
+  {
+    slug: "chia-pudding-coconut-strawberries",
+    icon: "🥥",
+    kcal: 280,
+    protein: 10,
+    carbs: 30,
+    fat: 15,
+    weight: 250,
+    categories: ["vegan", "vegetarian", "balanced", "high-fat"],
+    name: {
+      bg: "Чиа пудинг с растително мляко и ягоди",
+      en: "Chia Pudding with Plant Milk and Strawberries"
+    },
+    recipe: {
+      bg: "Накисни чиа семена в растително мляко и добави пресни ягоди.",
+      en: "Soak chia seeds in plant milk and add fresh strawberries."
+    },
+    ingredients: [
+      { name: { bg: "чиа семена", en: "chia seeds" }, amount: 30, unit: "g" },
+      { name: { bg: "растително мляко", en: "plant milk" }, amount: 150, unit: "ml" },
+      { name: { bg: "ягоди", en: "strawberries" }, amount: 70, unit: "g" }
+    ],
+    link: "",
+    mealType: ["breakfast"],
+    proteinSource: "vegan"
+  },
+  {
+    slug: "vegan-protein-shake-plant-milk",
+    icon: "🥤",
+    kcal: 150,
+    protein: 25,
+    carbs: 3,
+    fat: 2,
+    weight: 300,
+    categories: ["vegan", "vegetarian", "high-protein", "snack"],
+    name: {
+      bg: "Веган протеинов шейк с растително мляко",
+      en: "Vegan Protein Shake with Plant Milk"
+    },
+    recipe: {
+      bg: "Смеси веган протеин на прах с растително мляко и лед.",
+      en: "Mix vegan protein powder with plant milk and ice."
+    },
+    ingredients: [
+      { name: { bg: "веган протеин", en: "vegan protein" }, amount: 30, unit: "g" },
+      { name: { bg: "растително мляко", en: "plant milk" }, amount: 250, unit: "ml" }
+    ],
+    link: "",
+    mealType: ["snack"],
+    proteinSource: "supplement"
+  },
+  {
+    slug: "vegan-zucchini-quinoa",
+    icon: "🥒",
+    kcal: 450,
+    protein: 18,
+    carbs: 50,
+    fat: 12,
+    weight: 400,
+    categories: ["vegan", "vegetarian", "balanced", "dinner"],
+    name: {
+      bg: "Веган тиквички с киноа и зеленчуци",
+      en: "Vegan Zucchini with Quinoa and Vegetables"
+    },
+    recipe: {
+      bg: "Запечи тиквички с киноа, чушки, домати и подправки.",
+      en: "Bake zucchini with quinoa, peppers, tomatoes, and spices."
+    },
+    ingredients: [
+      { name: { bg: "тиквички", en: "zucchini" }, amount: 150, unit: "g" },
+      { name: { bg: "киноа", en: "quinoa" }, amount: 70, unit: "g" },
+      { name: { bg: "чушки", en: "peppers" }, amount: 80, unit: "g" },
+      { name: { bg: "домати", en: "tomatoes" }, amount: 100, unit: "g" },
+      { name: { bg: "подправки", en: "spices" }, amount: 5, unit: "g" }
+    ],
+    link: "",
+    mealType: ["dinner"],
+    proteinSource: "vegan"
+  },
+  {
+    slug: "vegetarian-lasagna-spinach-ricotta",
+    icon: "🥘",
+    kcal: 520,
+    protein: 30,
+    carbs: 45,
+    fat: 20,
+    weight: 450,
+    categories: ["vegetarian", "balanced", "dinner"],
+    name: {
+      bg: "Вегетарианска лазаня със спанак и рикота",
+      en: "Vegetarian Lasagna with Spinach and Ricotta"
+    },
+    recipe: {
+      bg: "Лазаня с домашна паста, спанак, рикота и доматен сос.",
+      en: "Lasagna with homemade pasta, spinach, ricotta, and tomato sauce."
+    },
+    ingredients: [
+      { name: { bg: "домашна лазаня паста", en: "homemade lasagna pasta" }, amount: 150, unit: "g" },
+      { name: { bg: "спанак", en: "spinach" }, amount: 100, unit: "g" },
+      { name: { bg: "рикота", en: "ricotta" }, amount: 100, unit: "g" },
+      { name: { bg: "доматен сос", en: "tomato sauce" }, amount: 100, unit: "ml" }
+    ],
+    link: "",
+    mealType: ["dinner"],
+    proteinSource: "dairy"
+  },
+    {
+    slug: "vegan-chickpea-curry",
+    icon: "🍛",
+    kcal: 480,
+    protein: 22,
+    carbs: 55,
+    fat: 15,
+    weight: 400,
+    categories: ["vegan", "vegetarian", "balanced", "dinner"],
+    name: {
+      bg: "Веганско къри с нахут и растително мляко",
+      en: "Vegan Chickpea Curry with Plant Milk"
+    },
+    recipe: {
+      bg: "Къри с нахут, зеленчуци и растително мляко, поднесено с ориз.",
+      en: "Curry with chickpeas, vegetables, and plant milk, served with rice."
+    },
+    ingredients: [
+      { name: { bg: "нахут", en: "chickpeas" }, amount: 150, unit: "g" },
+      { name: { bg: "растително мляко", en: "plant milk" }, amount: 100, unit: "ml" },
+      { name: { bg: "ориз", en: "rice" }, amount: 50, unit: "g" }
+    ],
+    link: "",
+    mealType: ["dinner"],
+    proteinSource: "vegan"
+  },
+  {
+    slug: "vegetarian-moussaka",
+    icon: "🍆",
+    kcal: 530,
+    protein: 28,
+    carbs: 40,
+    fat: 22,
+    weight: 450,
+    categories: ["vegetarian", "balanced", "dinner"],
+    name: {
+      bg: "Вегетарианска мусака с патладжан и картофи",
+      en: "Vegetarian Moussaka with Eggplant and Potatoes"
+    },
+    recipe: {
+      bg: "Мусака с патладжан, картофи и млечен сос.",
+      en: "Moussaka with eggplant, potatoes, and milk sauce."
+    },
+    ingredients: [
+      { name: { bg: "патладжан", en: "eggplant" }, amount: 150, unit: "g" },
+      { name: { bg: "картофи", en: "potatoes" }, amount: 150, unit: "g" },
+      { name: { bg: "млечен сос", en: "milk sauce" }, amount: 150, unit: "g" }
+    ],
+    link: "",
+    mealType: ["dinner"],
+    proteinSource: "dairy"
+  },
+  {
+    slug: "vegan-spaghetti-chickpea-balls",
+    icon: "🍝",
+    kcal: 500,
+    protein: 25,
+    carbs: 60,
+    fat: 14,
+    weight: 400,
+    categories: ["vegan", "vegetarian", "balanced", "dinner"],
+    name: {
+      bg: "Вегански спагети с доматен сос и нахутени кюфтета",
+      en: "Vegan Spaghetti with Tomato Sauce and Chickpea Balls"
+    },
+    recipe: {
+      bg: "Спагети с доматен сос и кюфтета от нахут и подправки.",
+      en: "Spaghetti with tomato sauce and chickpea balls with spices."
+    },
+    ingredients: [
+      { name: { bg: "паста", en: "pasta" }, amount: 150, unit: "g" },
+      { name: { bg: "домати", en: "tomatoes" }, amount: 100, unit: "g" },
+      { name: { bg: "нахутени кюфтета", en: "chickpea balls" }, amount: 120, unit: "g" }
+    ],
+    link: "",
+    mealType: ["dinner"],
+    proteinSource: "vegan"
+  },
+  {
+    slug: "grilled-lamb-chops",
+    icon: "🍖",
+    kcal: 560,
+    protein: 42,
+    carbs: 0,
+    fat: 44,
+    weight: 300,
+    categories: ["carnivore", "keto", "high-protein"],
+    name: {
+      bg: "Агнешки котлети на скара",
+      en: "Grilled Lamb Chops"
+    },
+    recipe: {
+      bg: "Овкуси агнешките котлети със сол и черен пипер, след което ги изпечи на скара до желаната готовност.",
+      en: "Season lamb chops with salt and black pepper, then grill to desired doneness."
+    },
+    ingredients: [
+      { name: { bg: "агнешки котлети", en: "lamb chops" }, amount: 250, unit: "g" }
+    ],
+    link: "",
+    mealType: ["dinner"],
+    proteinSource: "lamb"
+  },
+  {
+    slug: "oven-pork-ribs",
+    icon: "🍖",
+    kcal: 700,
+    protein: 50,
+    carbs: 1,
+    fat: 55,
+    weight: 400,
+    categories: ["carnivore", "keto", "high-fat"],
+    name: {
+      bg: "Свински ребра на фурна",
+      en: "Oven-Baked Pork Ribs"
+    },
+    recipe: {
+      bg: "Овкуси ребрата със сол и подправки, покрий с фолио и печи бавно на фурна до пълна готовност.",
+      en: "Season the ribs with salt and spices, cover with foil, and bake slowly in the oven until fully cooked."
+    },
+    ingredients: [
+      { name: { bg: "свински ребра", en: "pork ribs" }, amount: 350, unit: "g" }
+    ],
+    link: "",
+    mealType: ["dinner"],
+    proteinSource: "pork"
+  },
+  {
+    slug: "beef-burger-no-bun",
+    icon: "🍔",
+    kcal: 550,
+    protein: 40,
+    carbs: 2,
+    fat: 42,
+    weight: 300,
+    categories: ["carnivore", "keto", "high-protein"],
+    name: {
+      bg: "Телешки бургер (без хляб)",
+      en: "Beef Burger (No Bun)"
+    },
+    recipe: {
+      bg: "Изпечи телешко кюфте и сервирай с резен кашкавал и яйце (по избор), без хляб.",
+      en: "Grill a beef patty and serve with a slice of cheese and an egg (optional), without bread."
+    },
+    ingredients: [
+      { name: { bg: "телешко кюфте", en: "beef patty" }, amount: 200, unit: "g" },
+      { name: { bg: "кашкавал", en: "cheese" }, amount: 50, unit: "g" },
+      { name: { bg: "яйце", en: "egg" }, amount: 1, unit: "бр." }
+    ],
+    link: "",
+    mealType: ["lunch"],
+    proteinSource: "beef"
+  }
 
 ];
 
