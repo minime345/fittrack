@@ -117,6 +117,7 @@ export const translations = {
       fat:"Мазнини",
       category:"Категории",
       button:"Зареди още",
+       unit: "г",
     },
   },
 
@@ -233,6 +234,7 @@ export const translations = {
   fat: "Fat",
   category:"Category",
   button:"Load more",
+   unit: "g",
 },
   },
 } as const;

@@ -408,7 +408,7 @@ export const meals = [
       en: "Serve 1 boiled egg with 1/4 avocado."
     },
     ingredients: [
-      { name: { bg: "яйце", en: "egg" }, amount: 1, unit: "" },
+      { name: { bg: "яйце", en: "eggs" }, amount: 1, unit: "" },
       { name: { bg: "авокадо", en: "avocado" }, amount: 0.5, unit: "" }
     ],
     link: "",
@@ -488,7 +488,7 @@ export const meals = [
     ingredients: [
       { name: { bg: "пълнозърнест хляб", en: "wholegrain bread" }, amount: 100, unit: "g" },
       { name: { bg: "авокадо", en: "avocado" }, amount: 1, unit: ""},
-      { name: { bg: "яйце", en: "egg" }, amount: 1, unit: "" }
+      { name: { bg: "яйце", en: "eggs" }, amount: 1, unit: "" }
     ],
     link: "",
     mealType: ["breakfast"],
@@ -746,7 +746,7 @@ export const meals = [
     ingredients: [
       { name: { bg: "телешко кюфте", en: "beef patty" }, amount: 200, unit: "g" },
       { name: { bg: "кашкавал", en: "cheese" }, amount: 50, unit: "g" },
-      { name: { bg: "яйце", en: "egg" }, amount: 1, unit: "" }
+      { name: { bg: "яйце", en: "eggs" }, amount: 1, unit: "" }
     ],
     link: "",
     mealType: ["lunch"],
