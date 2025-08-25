@@ -567,7 +567,7 @@ export const meals = [
       { name: { bg: "киноа", en: "quinoa" }, amount: 70, unit: "g" },
       { name: { bg: "чушки", en: "peppers" }, amount: 80, unit: "g" },
       { name: { bg: "домати", en: "tomatoes" }, amount: 100, unit: "g" },
-      { name: { bg: "подправки", en: "spices" }, amount: 5, unit: "g" }
+      { name: { bg: "подправки(спл, пипер и др.)", en: "spices(salt, pepper and others...)" }, }
     ],
     link: "",
     mealType: ["dinner"],
