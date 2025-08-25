@@ -38,7 +38,7 @@ export default function Plans() {
   const { lang, setLang } = useLang();
   const currentYear = new Date().getFullYear();
 
-  // Задаваме fallback, за да не счупи рендера
+  // fallback за езика
   const t = translations[lang] || translations.bg;
 
   useEffect(() => {
@@ -71,7 +71,7 @@ export default function Plans() {
               <NavLink href="/meals" label={t.nav.meals} />
             </nav>
       
-            {/* Бутон за смяна на език – остава само един път */}
+            {/* Бутон за смяна на език */}
             <button
               onClick={toggleLang}
               aria-label="Switch language"
@@ -89,7 +89,7 @@ export default function Plans() {
           </div>
         </div>
       
-        {/* Mobile menu – без бутон за език вътре */}
+        {/* Mobile menu */}
         {isOpen && (
           <div className="md:hidden bg-black/80 px-6 pb-4">
             <div className="flex flex-col gap-4">
@@ -134,7 +134,7 @@ export default function Plans() {
           >
             <Link
               href={plan.href}
-              className="relative rounded-2xl overflow-hidden group shadow-lg hover:shadow-xl transition"
+              className="relative block rounded-2xl overflow-hidden group shadow-lg hover:shadow-xl transition"
             >
               <Image
                 src={plan.image}
@@ -266,7 +266,6 @@ export default function Plans() {
 
       {/* Vercel Analytics */}
       <Analytics />
-    
     </main>
   );
 }

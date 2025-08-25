@@ -20,7 +20,7 @@ function Logo() {
       <div className="w-10 h-10 bg-gradient-to-tr from-green-400 to-lime-500 rounded-full flex items-center justify-center text-black font-bold text-lg shadow-md">
         F
       </div>
-      <span className="text-xl md:text-2xl font-bold tracking-wide text-white">FitTrack</span>
+      <span className="text-xl md:text-2xl font-bold tracking-wide text-white">FitAppTrack</span>
     </div>
   );
 }
