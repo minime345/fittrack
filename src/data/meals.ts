@@ -741,7 +741,7 @@ export const meals = [
     },
     recipe: {
       bg: "Изпечи телешко кюфте и сервирай с резен кашкавал, яйце и завий със салата Айзберг",
-      en: "Grill a beef patty and serve with a slice of cheese, egg and lettuce instead of a bun"
+      en: "Grill a beef patty and serve with a slice of cheese, egg and wrap it in lettuce instead of a bun"
     },
     ingredients: [
       { name: { bg: "телешко кюфте", en: "beef patty" }, amount: 200, unit: "g" },
