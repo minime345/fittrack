@@ -44,11 +44,11 @@ export const meals = [
     },
     recipe: {
       bg: "Смеси овес, вода/ядково мляко, нарязан банан и 1 с.л. фъстъчено масло.",
-      en: "Mix oats, water/plant milk, sliced banana, and 1 tbsp peanut butter."
+      en: "Mix oats, water/plant milk, sliced banana and 1 tbsp peanut butter."
     },
     ingredients: [
       { name: { bg: "овесени ядки", en: "oats" }, amount: 60, unit: "g" },
-      { name: { bg: "банан", en: "banana" }, amount: 1, unit: "pcs" },
+      { name: { bg: "банан", en: "banana" }, amount: 1, unit: "" },
       { name: { bg: "фъстъчено масло", en: "peanut butter" }, amount: 15, unit: "g" },
       { name: { bg: "растително мляко", en: "plant milk" }, amount: 200, unit: "ml" }
     ],
@@ -67,16 +67,16 @@ export const meals = [
     categories: ["keto", "carnivore"],
     name: {
       bg: "Кето салата с яйце, авокадо и бекон",
-      en: "Keto Salad with Egg, Avocado, and Bacon"
+      en: "Keto Salad with Egg, Avocado and Bacon"
     },
     recipe: {
       bg: "Салата с маруля, варено яйце, авокадо, бекон и зехтин.",
-      en: "Salad with lettuce, boiled egg, avocado, bacon, and olive oil."
+      en: "Salad with lettuce, boiled egg, avocado, bacon and olive oil."
     },
     ingredients: [
       { name: { bg: "маруля", en: "lettuce" }, amount: 50, unit: "g" },
-      { name: { bg: "яйца", en: "eggs" }, amount: 1, unit: "pcs" },
-      { name: { bg: "авокадо", en: "avocado" }, amount: 0.5, unit: "pcs" },
+      { name: { bg: "яйца", en: "eggs" }, amount: 1, unit: "" },
+      { name: { bg: "авокадо", en: "avocado" }, amount: 0.5, unit: "" },
       { name: { bg: "бекон", en: "bacon" }, amount: 40, unit: "g" },
       { name: { bg: "зехтин", en: "olive oil" }, amount: 10, unit: "ml" }
     ],
@@ -99,10 +99,10 @@ export const meals = [
     },
     recipe: {
       bg: "Блендирай банан, веган протеин, ядково мляко и лед.",
-      en: "Blend banana, vegan protein, plant milk, and ice."
+      en: "Blend banana, vegan protein, plant milk and ice."
     },
     ingredients: [
-      { name: { bg: "банан", en: "banana" }, amount: 1, unit: "pcs" },
+      { name: { bg: "банан", en: "banana" }, amount: 1, unit: "" },
       { name: { bg: "веган протеин", en: "vegan protein" }, amount: 30, unit: "g" },
       { name: { bg: "растително мляко", en: "plant milk" }, amount: 200, unit: "ml" }
     ],
@@ -129,7 +129,7 @@ export const meals = [
     },
     ingredients: [
       { name: { bg: "говеждо месо", en: "beef" }, amount: 150, unit: "g" },
-      { name: { bg: "яйца", en: "eggs" }, amount: 2, unit: "pcs" },
+      { name: { bg: "яйца", en: "eggs" }, amount: 2, unit: "" },
       { name: { bg: "сирене", en: "cheese" }, amount: 30, unit: "g" }
     ],
     link: "/meals/beef-egg-cheese",
@@ -151,13 +151,13 @@ export const meals = [
     },
     recipe: {
       bg: "Свари леща с лук, моркови, домат и подправки.",
-      en: "Cook lentils with onion, carrots, tomato, and spices."
+      en: "Cook lentils with onion, carrots, tomato and spices."
     },
     ingredients: [
       { name: { bg: "леща", en: "lentils" }, amount: 80, unit: "g" },
-      { name: { bg: "морков", en: "carrot" }, amount: 1, unit: "pcs" },
+      { name: { bg: "морков", en: "carrot" }, amount: 1, unit: "" },
       { name: { bg: "домати", en: "tomatoes" }, amount: 100, unit: "g" },
-      { name: { bg: "лук", en: "onion" }, amount: 0.5, unit: "pcs" }
+      { name: { bg: "лук", en: "onion" }, amount: 0.5, unit: "" }
     ],
     link: "/meals/lentil-stew",
     mealType: ["lunch"],
@@ -177,10 +177,10 @@ export const meals = [
   },
   recipe: {
     bg: "Приготви омлет от яйца с гъби и спанак.",
-    en: "Cook an omelet with eggs, mushrooms, and spinach."
+    en: "Cook an omelet with eggs, mushrooms and spinach."
   },
   ingredients: [
-    { name: { bg: "яйца", en: "eggs" }, amount: 2, unit: "pcs" },
+    { name: { bg: "яйца", en: "eggs" }, amount: 2, unit: "" },
     { name: { bg: "гъби", en: "mushrooms" }, amount: 50, unit: "g" },
     { name: { bg: "спанак", en: "spinach" }, amount: 50, unit: "g" }
   ],
@@ -208,7 +208,7 @@ export const meals = [
   ingredients: [
     { name: { bg: "сьомга", en: "salmon" }, amount: 150, unit: "g" },
     { name: { bg: "броколи", en: "broccoli" }, amount: 100, unit: "g" },
-    { name: { bg: "морков", en: "carrot" }, amount: 1, unit: "pcs" }
+    { name: { bg: "морков", en: "carrot" }, amount: 1, unit: "" }
   ],
   link: "/meals/salmon-veggies",
   mealType: ["dinner", "lunch"],
@@ -357,7 +357,7 @@ export const meals = [
     en: "Spread peanut butter on 2 rice cakes."
   },
   ingredients: [
-    { name: { bg: "оризовки", en: "rice cakes" }, amount: 2, unit: "бр." },
+    { name: { bg: "оризовки", en: "rice cakes" }, amount: 2, unit: "" },
     { name: { bg: "фъстъчено масло", en: "peanut butter" }, amount: 15, unit: "g" }
   ],
   link: "",
@@ -408,8 +408,8 @@ export const meals = [
       en: "Serve 1 boiled egg with 1/4 avocado."
     },
     ingredients: [
-      { name: { bg: "яйце", en: "egg" }, amount: 1, unit: "бр." },
-      { name: { bg: "авокадо", en: "avocado" }, amount: 0.5, unit: "бр." }
+      { name: { bg: "яйце", en: "egg" }, amount: 1, unit: "" },
+      { name: { bg: "авокадо", en: "avocado" }, amount: 0.5, unit: "" }
     ],
     link: "",
     mealType: ["snack", "breakfast"],
@@ -430,7 +430,7 @@ export const meals = [
     },
     recipe: {
       bg: "Бар от фурми, ядки и растителен протеин.",
-      en: "Bar made of dates, nuts, and plant protein."
+      en: "Bar made of dates, nuts and plant protein."
     },
     ingredients: [
       { name: { bg: "фурми", en: "dates" }, amount: 20, unit: "g" },
@@ -456,12 +456,12 @@ export const meals = [
     },
     recipe: {
       bg: "Нарежи краставици, чушки и моркови, сервирай с хумус.",
-      en: "Slice cucumbers, peppers, and carrots, serve with hummus."
+      en: "Slice cucumbers, peppers and carrots, serve with hummus."
     },
     ingredients: [
       { name: { bg: "краставици", en: "cucumbers" }, amount: 70, unit: "g" },
       { name: { bg: "чушки", en: "peppers" }, amount: 70, unit: "g" },
-      { name: { bg: "морков", en: "carrot" }, amount: 1, unit: "бр." },
+      { name: { bg: "морков", en: "carrot" }, amount: 1, unit: "" },
       { name: { bg: "хумус", en: "hummus" }, amount: 30, unit: "g" }
     ],
     link: "",
@@ -487,12 +487,12 @@ export const meals = [
     },
     ingredients: [
       { name: { bg: "пълнозърнест хляб", en: "wholegrain bread" }, amount: 100, unit: "g" },
-      { name: { bg: "авокадо", en: "avocado" }, amount: 1, unit: "бр." },
-      { name: { bg: "яйце", en: "egg" }, amount: 1, unit: "бр." }
+      { name: { bg: "авокадо", en: "avocado" }, amount: 1, unit: ""},
+      { name: { bg: "яйце", en: "egg" }, amount: 1, unit: "" }
     ],
     link: "",
     mealType: ["breakfast"],
-    proteinSource: "egg"
+    proteinSource: "egg",
   },
   {
     slug: "chia-pudding-coconut-strawberries",
@@ -560,7 +560,7 @@ export const meals = [
     },
     recipe: {
       bg: "Запечи тиквички с киноа, чушки, домати и подправки.",
-      en: "Bake zucchini with quinoa, peppers, tomatoes, and spices."
+      en: "Bake zucchini with quinoa, peppers, tomatoes and spices."
     },
     ingredients: [
       { name: { bg: "тиквички", en: "zucchini" }, amount: 150, unit: "g" },
@@ -588,7 +588,7 @@ export const meals = [
     },
     recipe: {
       bg: "Лазаня с домашна паста, спанак, рикота и доматен сос.",
-      en: "Lasagna with homemade pasta, spinach, ricotta, and tomato sauce."
+      en: "Lasagna with homemade pasta, spinach, ricotta and tomato sauce."
     },
     ingredients: [
       { name: { bg: "домашна лазаня паста", en: "homemade lasagna pasta" }, amount: 150, unit: "g" },
@@ -615,7 +615,7 @@ export const meals = [
     },
     recipe: {
       bg: "Къри с нахут, зеленчуци и растително мляко, поднесено с ориз.",
-      en: "Curry with chickpeas, vegetables, and plant milk, served with rice."
+      en: "Curry with chickpeas, vegetables and plant milk, served with rice."
     },
     ingredients: [
       { name: { bg: "нахут", en: "chickpeas" }, amount: 150, unit: "g" },
@@ -641,7 +641,7 @@ export const meals = [
     },
     recipe: {
       bg: "Мусака с патладжан, картофи и млечен сос.",
-      en: "Moussaka with eggplant, potatoes, and milk sauce."
+      en: "Moussaka with eggplant, potatoes and milk sauce."
     },
     ingredients: [
       { name: { bg: "патладжан", en: "eggplant" }, amount: 150, unit: "g" },
@@ -717,7 +717,7 @@ export const meals = [
     },
     recipe: {
       bg: "Овкуси ребрата със сол и подправки, покрий с фолио и печи бавно на фурна до пълна готовност.",
-      en: "Season the ribs with salt and spices, cover with foil, and bake slowly in the oven until fully cooked."
+      en: "Season the ribs with salt and spices, cover with foil and bake slowly in the oven until fully cooked."
     },
     ingredients: [
       { name: { bg: "свински ребра", en: "pork ribs" }, amount: 350, unit: "g" }
@@ -746,7 +746,7 @@ export const meals = [
     ingredients: [
       { name: { bg: "телешко кюфте", en: "beef patty" }, amount: 200, unit: "g" },
       { name: { bg: "кашкавал", en: "cheese" }, amount: 50, unit: "g" },
-      { name: { bg: "яйце", en: "egg" }, amount: 1, unit: "бр." }
+      { name: { bg: "яйце", en: "egg" }, amount: 1, unit: "" }
     ],
     link: "",
     mealType: ["lunch"],
