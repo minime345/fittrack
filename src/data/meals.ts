@@ -736,8 +736,8 @@ export const meals = [
     weight: 300,
     categories: ["carnivore", "keto", "high-protein"],
     name: {
-      bg: "Телешки бургер (без хляб)",
-      en: "Beef Burger (No Bun)"
+      bg: "Телешки бургер с айзберг завивка",
+      en: "Beef Burger with lettuce instead of a bun"
     },
     recipe: {
       bg: "Изпечи телешко кюфте и сервирай с резен кашкавал и яйце (по избор), без хляб.",
@@ -746,7 +746,8 @@ export const meals = [
     ingredients: [
       { name: { bg: "телешко кюфте", en: "beef patty" }, amount: 200, unit: "g" },
       { name: { bg: "кашкавал", en: "cheese" }, amount: 50, unit: "g" },
-      { name: { bg: "яйца", en: "eggs" }, amount: 1, unit: "" }
+      { name: { bg: "яйца", en: "eggs" }, amount: 1, unit: "" },
+      { name: { bg: "айзберг", en: "lettuce" }, amount: 20, unit: "g" },
     ],
     link: "",
     mealType: ["lunch"],
