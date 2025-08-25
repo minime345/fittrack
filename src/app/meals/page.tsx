@@ -39,22 +39,23 @@ export default function MealsPage() {
   const [visibleMealsCount, setVisibleMealsCount] = useState(mealsPerPage);
   const [isOpen, setIsOpen] = useState(false);
   const [lang, setLang] = useState<Lang>("bg"); // default bg
-    const currentYear = new Date().getFullYear();
-     useEffect(() => {
-        const saved = localStorage.getItem("lang");
-        if (saved === "en" || saved === "bg") {
-          setLang(saved);
-        }
-      }, []);
-    
-      const toggleLang = () => {
-        const newLang = lang === "bg" ? "en" : "bg";
-        setLang(newLang);
-        localStorage.setItem("lang", newLang);
-      };
-    
-      // Преводи
-      const t = translations[lang] || translations.bg;
+  const currentYear = new Date().getFullYear();
+
+  useEffect(() => {
+    const saved = localStorage.getItem("lang");
+    if (saved === "en" || saved === "bg") {
+      setLang(saved);
+    }
+  }, []);
+
+  const toggleLang = () => {
+    const newLang = lang === "bg" ? "en" : "bg";
+    setLang(newLang);
+    localStorage.setItem("lang", newLang);
+  };
+
+  // Преводи
+  const t = translations[lang] || translations.bg;
 
   const filteredMeals =
     activeCategory === "all"
@@ -73,7 +74,7 @@ export default function MealsPage() {
       <header className="sticky top-0 z-50 backdrop-blur-md bg-white/5 border-b border-white/10 shadow-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
           <Logo />
-      
+
           <div className="flex items-center gap-6">
             {/* Навигация за десктоп */}
             <nav className="hidden md:flex gap-10">
@@ -83,8 +84,8 @@ export default function MealsPage() {
               <NavLink href="/plans" label={t.nav.plans} />
               <NavLink href="/meals" label={t.nav.meals} />
             </nav>
-      
-            {/* Бутон за смяна на език – остава само един път */}
+
+            {/* Бутон за смяна на език */}
             <button
               onClick={toggleLang}
               aria-label="Switch language"
@@ -92,7 +93,7 @@ export default function MealsPage() {
             >
               {lang === "bg" ? "BG" : "EN"}
             </button>
-      
+
             {/* Mobile menu button */}
             <div className="md:hidden">
               <button onClick={() => setIsOpen(!isOpen)} aria-label="Toggle menu">
@@ -101,8 +102,8 @@ export default function MealsPage() {
             </div>
           </div>
         </div>
-      
-        {/* Mobile menu – без бутон за език вътре */}
+
+        {/* Mobile menu */}
         {isOpen && (
           <div className="md:hidden bg-black/80 px-6 pb-4">
             <div className="flex flex-col gap-4">
@@ -143,7 +144,7 @@ export default function MealsPage() {
               }`}
             >
               {cat === "all" ? t.meals.all 
-            : cat.charAt(0).toUpperCase() + cat.slice(1)}
+                : cat.charAt(0).toUpperCase() + cat.slice(1)}
             </button>
           ))}
         </div>
@@ -152,52 +153,52 @@ export default function MealsPage() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {visibleMeals.map((meal, i) => (
             <motion.div
-  key={meal.slug}
-  initial={{ opacity: 0, y: 20 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ delay: i * 0.05 }}
-  className="bg-gray-900/60 hover:bg-gray-800/80 transition rounded-2xl p-6 shadow-xl border border-white/10 backdrop-blur"
->
-  {meal.link ? (
-    <Link href={meal.link} className="block h-full">
-      <div className="flex items-center gap-4 mb-4">
-        <div className="text-4xl">{meal.icon}</div>
-        <h2 className="text-xl font-bold text-green-400">{meal.name[lang]}</h2>
-      </div>
-      <div className="grid grid-cols-2 gap-4 text-sm text-gray-300 mb-2">
-        <div><span className="font-semibold text-white">{t.meals.cal}:</span> {meal.kcal}</div>
-        <div><span className="font-semibold text-white">{t.meals.prot}:</span> {meal.protein} г</div>
-        <div><span className="font-semibold text-white">{t.meals.carb}:</span> {meal.carbs} г</div>
-        <div><span className="font-semibold text-white">{t.meals.fat}:</span> {meal.fat} г</div>
-      </div>
-      <div className="text-xs text-gray-400 italic">
-        {t.meals.category}: {meal.categories.join(", ")}
-      </div>
-    </Link>
-  ) : (
-    <div className="block h-full cursor-default">
-      <div className="flex items-center gap-4 mb-4">
-        <div className="text-4xl">{meal.icon}</div>
-        <h2 className="text-xl font-bold text-green-400">{meal.name[lang]}</h2>
-      </div>
-      <div className="grid grid-cols-2 gap-4 text-sm text-gray-300 mb-2">
-        <div><span className="font-semibold text-white">{t.meals.cal}:</span> {meal.kcal}</div>
-        <div><span className="font-semibold text-white">{t.meals.prot}:</span> {meal.protein} g</div>
-        <div><span className="font-semibold text-white">{t.meals.carb}:</span> {meal.carbs} g</div>
-        <div><span className="font-semibold text-white">{t.meals.fat}:</span> {meal.fat} g</div>
-      </div>
-      <div className="text-xs text-gray-400 italic mb-2">
-        {t.meals.category}: {meal.categories.join(", ")}
-      </div>
-      <div className="text-sm text-white mt-2 whitespace-pre-wrap">
-        <span className="font-semibold text-green-400">
-          {lang === "bg" ? "Рецепта:" : "Recipe:"}
-        </span>{" "}
-        {meal.recipe[lang]}
-      </div>
-    </div>
-  )}
-</motion.div>
+              key={meal.slug}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.05 }}
+              className="bg-gray-900/60 hover:bg-gray-800/80 transition rounded-2xl p-6 shadow-xl border border-white/10 backdrop-blur"
+            >
+              {meal.link ? (
+                <Link href={meal.link} className="block h-full">
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="text-4xl">{meal.icon}</div>
+                    <h2 className="text-xl font-bold text-green-400">{meal.name[lang]}</h2>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4 text-sm text-gray-300 mb-2">
+                    <div><span className="font-semibold text-white">{t.meals.cal}:</span> {meal.kcal}</div>
+                    <div><span className="font-semibold text-white">{t.meals.prot}:</span> {meal.protein} {t.meals.unit}</div>
+                    <div><span className="font-semibold text-white">{t.meals.carb}:</span> {meal.carbs} {t.meals.unit}</div>
+                    <div><span className="font-semibold text-white">{t.meals.fat}:</span> {meal.fat} {t.meals.unit}</div>
+                  </div>
+                  <div className="text-xs text-gray-400 italic">
+                    {t.meals.category}: {meal.categories.join(", ")}
+                  </div>
+                </Link>
+              ) : (
+                <div className="block h-full cursor-default">
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="text-4xl">{meal.icon}</div>
+                    <h2 className="text-xl font-bold text-green-400">{meal.name[lang]}</h2>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4 text-sm text-gray-300 mb-2">
+                    <div><span className="font-semibold text-white">{t.meals.cal}:</span> {meal.kcal}</div>
+                    <div><span className="font-semibold text-white">{t.meals.prot}:</span> {meal.protein} {t.meals.unit}</div>
+                    <div><span className="font-semibold text-white">{t.meals.carb}:</span> {meal.carbs} {t.meals.unit}</div>
+                    <div><span className="font-semibold text-white">{t.meals.fat}:</span> {meal.fat} {t.meals.unit}</div>
+                  </div>
+                  <div className="text-xs text-gray-400 italic mb-2">
+                    {t.meals.category}: {meal.categories.join(", ")}
+                  </div>
+                  <div className="text-sm text-white mt-2 whitespace-pre-wrap">
+                    <span className="font-semibold text-green-400">
+                      {lang === "bg" ? "Рецепта:" : "Recipe:"}
+                    </span>{" "}
+                    {meal.recipe[lang]}
+                  </div>
+                </div>
+              )}
+            </motion.div>
           ))}
         </div>
 
@@ -213,6 +214,7 @@ export default function MealsPage() {
           </div>
         )}
       </section>
+
       {/* Footer */}
       <footer className="bg-gray-900 text-gray-300 py-12 mt-12 border-t border-white/10">
         <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10">
