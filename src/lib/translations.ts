@@ -231,7 +231,7 @@ export const translations = {
   prot: "Protein",
   carb: "Carbohydrates",
   fat: "Fat",
-  category:"Categoty",
+  category:"Category",
   button:"Load more",
 },
   },

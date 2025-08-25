@@ -182,9 +182,9 @@ export default function MealsPage() {
       </div>
       <div className="grid grid-cols-2 gap-4 text-sm text-gray-300 mb-2">
         <div><span className="font-semibold text-white">{t.meals.cal}:</span> {meal.kcal}</div>
-        <div><span className="font-semibold text-white">{t.meals.prot}:</span> {meal.protein} г</div>
-        <div><span className="font-semibold text-white">{t.meals.carb}:</span> {meal.carbs} г</div>
-        <div><span className="font-semibold text-white">{t.meals.fat}:</span> {meal.fat} г</div>
+        <div><span className="font-semibold text-white">{t.meals.prot}:</span> {meal.protein} g</div>
+        <div><span className="font-semibold text-white">{t.meals.carb}:</span> {meal.carbs} g</div>
+        <div><span className="font-semibold text-white">{t.meals.fat}:</span> {meal.fat} g</div>
       </div>
       <div className="text-xs text-gray-400 italic mb-2">
         {t.meals.category}: {meal.categories.join(", ")}
